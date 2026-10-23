@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data-Based FX | Backtested Trading & Pivot Levels Mentorship</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #05070B;
+    }
+    .font-mono-custom {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(0, 242, 254, 0.35), 0 0 40px rgba(0, 242, 254, 0.15); }
+      50% { box-shadow: 0 0 35px rgba(0, 242, 254, 0.7), 0 0 60px rgba(0, 242, 254, 0.3); }
+    }
+    @keyframes gold-glow {
+      0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.25); }
+      50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
+    }
+    .animate-glow { animation: pulse-glow 3.5s infinite ease-in-out; }
+    .animate-gold-glow { animation: gold-glow 3.5s infinite ease-in-out; }
+    
+    .glass-card {
+      background: rgba(11, 17, 28, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .glass-card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card-hover:hover {
+      border-color: rgba(0, 242, 254, 0.4);
+      box-shadow: 0 10px 30px -10px rgba(0, 242, 254, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-[#05070B] text-slate-100 font-sans antialiased selection:bg-[#00F2FE] selection:text-black">
+
+  <!-- TOP NAVIGATION -->
+  <header class="fixed top-0 left-0 w-full z-50 glass-card border-b border-slate-900/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo Branding -->
+      <a href="#" class="flex items-center space-x-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#00A8FF] to-[#00F2FE] flex items-center justify-center font-black text-slate-950 text-sm tracking-wider shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+          DBF
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg font-extrabold tracking-wider text-white group-hover:text-[#00F2FE] transition-colors">
+            DATA-BASED <span class="text-[#00F2FE]">FX</span>
+          </span>
+          <span class="text-[9px] font-mono-custom tracking-widest text-slate-400 uppercase">
+            QUANTITATIVE FOREX INTELLIGENCE
+          </span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center space-x-8 text-xs font-semibold tracking-wide text-slate-300">
+        <a href="#backtested-results" class="hover:text-[#00F2FE] transition-colors">Backtested Results</a>
+        <a href="#breakdowns" class="hover:text-[#00F2FE] transition-colors">Verified Breakdowns</a>
+        <a href="#calculator" class="hover:text-[#00F2FE] transition-colors">Risk Calculator</a>
+        <a href="#mentors" class="hover:text-[#00F2FE] transition-colors">Mentors</a>
+        <a href="#one-on-one" class="hover:text-amber-400 transition-colors">One on One Access</a>
+        <a href="#faq" class="hover:text-[#00F2FE] transition-colors">FAQ</a>
+      </nav>
+
+      <!-- CTA Button -->
+      <button onclick="openFunnelModal()" class="px-5 py-2.5 rounded-xl text-xs font-extrabold tracking-wide bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:scale-105 transition-all duration-300 animate-glow shadow-lg shadow-cyan-500/25 flex items-center space-x-2">
+        <span>Apply Now to Join</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-36 pb-24 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-950/30 via-[#05070B] to-[#05070B]"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      
+      <!-- Tag Badge -->
+      <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full glass-card border border-[#00F2FE]/30 text-[#00F2FE] text-[11px] font-mono-custom mb-8 animate-glow">
+        <span class="w-2 h-2 rounded-full bg-[#00F2FE] animate-pulse"></span>
+        <span>INSTITUTIONAL DATA & SYSTEMATIC EXECUTION</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight max-w-5xl mx-auto mb-6">
+        Precision-Driven Trading Backed by <br class="hidden sm:inline">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00F2FE] via-cyan-300 to-amber-400">
+          Backtested Data
+        </span>
+      </h1>
+
+      <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+        Eliminate emotional bias across <strong>Forex, Metals (Gold), and Indices</strong>. Access systematic probabilities, automated position sizing tools, and high-confluence 10RR setups.
+      </p>
+
+      <!-- CTA Action Group -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button onclick="openFunnelModal()" class="w-full sm:w-auto px-8 py-4 rounded-xl text-xs font-black uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:shadow-[0_0_35px_rgba(0,242,254,0.6)] hover:scale-105 transition-all duration-300">
+          Apply Now to Join
+        </button>
+        <a href="#calculator" class="w-full sm:w-auto px-8 py-4 rounded-xl text-xs font-semibold glass-card text-slate-300 hover:text-white hover:border-[#00F2FE]/40 transition-all text-center">
+          Explore Calculator & Analysis &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACKTESTED RESULTS -->
+  <section id="backtested-results" class="py-20 border-t border-slate-900 bg-slate-950/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="text-[#00F2FE] text-xs font-mono-custom uppercase tracking-widest">Empirical Backtesting</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Backtested Results</h2>
+        </div>
+        <p class="text-slate-400 text-xs max-w-md mt-4 md:mt-0 leading-relaxed">
+          Historical trade setups and backtest data across all 3 asset classes targeting structured 10RR setups.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- FX Asset Box -->
+        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-slate-800">
+          <div class="aspect-video bg-[#080D1A] rounded-xl mb-4 flex items-center justify-center border border-slate-800 overflow-hidden relative">
+            <span class="text-slate-500 text-xs font-mono-custom text-center px-4">[ FX Backtest Screenshot Placeholder ]</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-1">Forex Pairs</h3>
+          <p class="text-slate-400 text-xs mb-3">EUR/USD, GBP/USD, USD/JPY Pivot Level Backtests</p>
+          <div class="flex justify-between items-center text-xs border-t border-slate-800/80 pt-3">
+            <span class="text-slate-400">Target Risk-Reward:</span>
+            <span class="text-amber-400 font-bold font-mono-custom">1:10 (10RR)</span>
+          </div>
+        </div>
+
+        <!-- Metals Asset Box -->
+        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-slate-800">
+          <div class="aspect-video bg-[#080D1A] rounded-xl mb-4 flex items-center justify-center border border-slate-800 overflow-hidden relative">
+            <span class="text-slate-500 text-xs font-mono-custom text-center px-4">[ Metals (Gold/XAUUSD) Screenshot Placeholder ]</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-1">Metals (Gold / XAUUSD)</h3>
+          <p class="text-slate-400 text-xs mb-3">High-Volatility Gold Liquidity Pivot Backtests</p>
+          <div class="flex justify-between items-center text-xs border-t border-slate-800/80 pt-3">
+            <span class="text-slate-400">Target Risk-Reward:</span>
+            <span class="text-amber-400 font-bold font-mono-custom">1:10 (10RR)</span>
+          </div>
+        </div>
+
+        <!-- Indices Asset Box -->
+        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-slate-800">
+          <div class="aspect-video bg-[#080D1A] rounded-xl mb-4 flex items-center justify-center border border-slate-800 overflow-hidden relative">
+            <span class="text-slate-500 text-xs font-mono-custom text-center px-4">[ Indices (NAS100 / US30) Screenshot Placeholder ]</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-1">Indices</h3>
+          <p class="text-slate-400 text-xs mb-3">US30 & NAS100 Structural Breakout Backtests</p>
+          <div class="flex justify-between items-center text-xs border-t border-slate-800/80 pt-3">
+            <span class="text-slate-400">Target Risk-Reward:</span>
+            <span class="text-amber-400 font-bold font-mono-custom">1:10 (10RR)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERIFIED MODEL BREAKDOWNS -->
+  <section id="breakdowns" class="py-20 border-t border-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-[#00F2FE] text-xs font-mono-custom uppercase tracking-widest">Performance Statistics</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Verified Model Breakdowns</h2>
+        <p class="text-slate-400 text-xs mt-2">Statistical outcomes across backtested setups in FX, Metals, and Indices.</p>
+      </div>
+
+      <div class="flex space-x-6 overflow-x-auto no-scrollbar pb-6">
+        <!-- FX Card -->
+        <div class="min-w-[300px] sm:min-w-[350px] glass-card p-6 rounded-2xl border border-slate-800 flex-shrink-0">
+          <div class="h-40 bg-[#080D1A] rounded-lg mb-4 flex items-center justify-center border border-slate-800">
+            <span class="text-slate-600 text-xs font-mono-custom">[ Major FX Backtest Chart ]</span>
+          </div>
+          <h4 class="text-lg font-bold text-white">Major FX Pairs</h4>
+          <p class="text-xs text-slate-400 mb-4">EURUSD, GBPUSD, AUDUSD</p>
+          <div class="space-y-2 text-xs border-t border-slate-800/80 pt-3 font-mono-custom">
+            <div class="flex justify-between"><span class="text-slate-400">Win Rate:</span><span class="text-teal-400 font-bold">68.4%</span></div>
+            <div class="flex justify-between"><span class="text-slate-400">Average RR:</span><span class="text-amber-400 font-bold">10RR</span></div>
+            <div class="flex justify-between"><span class="text-slate-400">Breakeven (BE):</span><span class="text-[#00F2FE] font-bold">12.1%</span></div>
+          </div>
+        </div>
+
+        <!-- Gold Card -->
+        <div class="min-w-[300px] sm:min-w-[350px] glass-card p-6 rounded-2xl border border-slate-800 flex-shrink-0">
+          <div class="h-40 bg-[#080D1A] rounded-lg mb-4 flex items-center justify-center border border-slate-800">
+            <span class="text-slate-600 text-xs font-mono-custom">[ Gold (XAUUSD) Backtest Chart ]</span>
+          </div>
+          <h4 class="text-lg font-bold text-white">Metals (XAU/USD)</h4>
+          <p class="text-xs text-slate-400 mb-4">Gold Spot / Dollar</p>
+          <div class="space-y-2 text-xs border-t border-slate-800/80 pt-3 font-mono-custom">
+            <div class="flex justify-between"><span class="text-slate-400">Win Rate:</span><span class="text-teal-400 font-bold">64.2%</span></div>
+            <div class="flex justify-between"><span class="text-slate-400">Average RR:</span><span class="text-amber-400 font-bold">10RR</span></div>
+            <div class="flex justify-between"><span class="text-slate-400">Breakeven (BE):</span><span class="text-[#00F2FE] font-bold">14.5%</span></div>
+          </div>
+        </div>
+
+        <!-- Indices Card -->
+        <div class="min-w-[300px] sm:min-w-[350px] glass-card p-6 rounded-2xl border border-slate-800 flex-shrink-0">
+          <div class="h-40 bg-[#080D1A] rounded-lg mb-4 flex items-center justify-center border border-slate-800">
+            <span class="text-slate-600 text-xs font-mono-custom">[ Indices Backtest Chart ]</span>
+          </div>
+          <h4 class="text-lg font-bold text-white">Indices</h4>
+          <p class="text-xs text-slate-400 mb-4">NAS100, US30, GER40</p>
+          <div class="space-y-2 text-xs border-t border-slate-800/80 pt-3 font-mono-custom">
+            <div class="flex justify-between"><span class="text-slate-400">Win Rate:</span><span class="text-teal-400 font-bold">71.0%</span></div>
+            <div class="flex justify-between"><span class="text-slate-400">Average RR:</span><span class="text-amber-400 font-bold">10RR</span></div>
+            <div class="flex justify-between"><span class="text-slate-400">Breakeven (BE):</span><span class="text-[#00F2FE] font-bold">9.8%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE RISK & POSITION SIZE CALCULATOR PAGE -->
+  <section id="calculator" class="py-24 border-t border-slate-900 bg-[#05070B]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Explanatory Column -->
+        <div class="lg:col-span-5">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-[#00F2FE]/30 text-[#00F2FE] text-[10px] font-mono-custom mb-4">
+            <span>💻 QUANTITATIVE RISK TOOL</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+            Precision Risk & Position Size Calculator
+          </h2>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Never guess your lot size again. Risk management is the single deciding factor between funded consistency and account blowouts.
+          </p>
+          
+          <ul class="space-y-4 text-xs text-slate-300">
+            <li class="flex items-start space-x-3">
+              <span class="text-[#00F2FE] font-bold text-base">✓</span>
+              <span>Automatic standard, mini, and micro lot calculation based on pair contract size.</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <span class="text-[#00F2FE] font-bold text-base">✓</span>
+              <span>Exact monetary risk projection before entering any market position.</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <span class="text-[#00F2FE] font-bold text-base">✓</span>
+              <span>Supports Forex Majors, Gold (XAUUSD), and Indices variations.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right Calculator Box (Matching Screenshot UI) -->
+        <div class="lg:col-span-7">
+          <div class="glass-card rounded-3xl p-8 border border-slate-800 shadow-2xl relative">
+            <div class="flex justify-between items-center mb-6 border-b border-slate-800/80 pb-4">
+              <h3 class="text-xl font-bold text-white">Lot Size Calculator</h3>
+              <span class="text-[10px] font-mono-custom text-slate-500">DBF v2.4</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+              <!-- Account Balance Input -->
+              <div>
+                <label class="block text-[10px] font-mono-custom uppercase tracking-wider text-slate-400 mb-2">Account Balance ($)</label>
+                <div class="relative">
+                  <span class="absolute left-4 top-3 text-slate-500 text-sm font-mono-custom">$</span>
+                  <input type="number" id="calcBalance" value="10000" oninput="calculateLotSize()" class="w-full bg-[#080D1A] border border-slate-800 rounded-xl py-2.5 pl-8 pr-4 text-white font-mono-custom text-sm focus:border-[#00F2FE] outline-none transition-colors">
+                </div>
+              </div>
+
+              <!-- Risk Percentage Input -->
+              <div>
+                <label class="block text-[10px] font-mono-custom uppercase tracking-wider text-slate-400 mb-2">Risk Percentage (%)</label>
+                <div class="relative">
+                  <input type="number" id="calcRisk" value="1.0" step="0.1" oninput="calculateLotSize()" class="w-full bg-[#080D1A] border border-slate-800 rounded-xl py-2.5 px-4 text-white font-mono-custom text-sm focus:border-[#00F2FE] outline-none transition-colors">
+                  <span class="absolute right-4 top-3 text-slate-500 text-sm font-mono-custom">%</span>
+                </div>
+              </div>
+
+              <!-- Instrument Select -->
+              <div>
+                <label class="block text-[10px] font-mono-custom uppercase tracking-wider text-slate-400 mb-2">Trading Instrument</label>
+                <select id="calcInstrument" onchange="calculateLotSize()" class="w-full bg-[#080D1A] border border-slate-800 rounded-xl py-2.5 px-4 text-white font-mono-custom text-sm focus:border-[#00F2FE] outline-none transition-colors">
+                  <option value="EURUSD">EURUSD (Forex Major)</option>
+                  <option value="GBPUSD">GBPUSD (Forex Major)</option>
+                  <option value="XAUUSD">XAUUSD (Gold)</option>
+                  <option value="NAS100">NAS100 / US30 (Indices)</option>
+                </select>
+              </div>
+
+              <!-- Stop Loss Pips Input -->
+              <div>
+                <label class="block text-[10px] font-mono-custom uppercase tracking-wider text-slate-400 mb-2">Stop Loss (Pips / Points)</label>
+                <input type="number" id="calcSL" value="25" oninput="calculateLotSize()" class="w-full bg-[#080D1A] border border-slate-800 rounded-xl py-2.5 px-4 text-white font-mono-custom text-sm focus:border-[#00F2FE] outline-none transition-colors">
+              </div>
+            </div>
+
+            <!-- Output Display Box -->
+            <div class="bg-[#03060C] border border-slate-800/80 rounded-2xl p-6 grid grid-cols-3 gap-4 text-center">
+              <div>
+                <span class="block text-[9px] font-mono-custom text-slate-500 uppercase tracking-wider mb-1">Monetary Risk</span>
+                <span id="outputRisk" class="text-lg font-bold text-red-500 font-mono-custom">$100.00</span>
+              </div>
+              <div>
+                <span class="block text-[9px] font-mono-custom text-slate-500 uppercase tracking-wider mb-1">Recommended Lot</span>
+                <span id="outputLot" class="text-xl font-extrabold text-[#00F2FE] font-mono-custom">0.40 Lots</span>
+              </div>
+              <div>
+                <span class="block text-[9px] font-mono-custom text-slate-500 uppercase tracking-wider mb-1">Units / Volume</span>
+                <span id="outputUnits" class="text-lg font-bold text-slate-200 font-mono-custom">40,000</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MENTORS SECTION -->
+  <section id="mentors" class="py-24 border-t border-slate-900 bg-slate-950/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-[#00F2FE] text-xs font-mono-custom uppercase tracking-widest">Leadership & Mentorship</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Meet Your Mentors</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+        <!-- Odipo Profile -->
+        <div class="glass-card rounded-3xl p-8 border border-slate-800 relative">
+          <div class="flex flex-col sm:flex-row items-center space-y-6 sm:space-y-0 sm:space-x-6 mb-6">
+            <img src="odipo.jpeg" alt="Odipo the Trader" class="w-32 h-32 rounded-2xl object-cover border-2 border-[#00F2FE] shadow-lg shadow-cyan-500/20">
+            <div>
+              <h3 class="text-2xl font-bold text-white">Odipo the Trader</h3>
+              <p class="text-[#00F2FE] text-xs font-mono-custom font-medium mt-0.5">Head Trader & Mentor</p>
+              <p class="text-slate-400 text-xs mt-1">Trading Financial Markets Since 2022</p>
+            </div>
+          </div>
+          <p class="text-slate-300 text-xs leading-relaxed mb-4">
+            Instead of jumping between dozens of conflicting strategies, Odipo trades <strong>one data-proven approach: Pivot Levels</strong>.
+          </p>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            This unique price action framework was developed by combining years of coaching experience across Price Action, Smart Money Concepts (SMC), ICT, Volume Profile, Order Flow, Fibonacci, and MSnR. Having coached <strong>over 1,000+ forex mentees</strong>, Odipo teaches a streamlined rule-set engineered for consistency.
+          </p>
+        </div>
+
+        <!-- Presenter Ali Profile -->
+        <div class="glass-card rounded-3xl p-8 border border-slate-800 relative">
+          <div class="flex flex-col sm:flex-row items-center space-y-6 sm:space-y-0 sm:space-x-6 mb-6">
+            <img src="ali.jpeg" alt="Presenter Ali" class="w-32 h-32 rounded-2xl object-cover border-2 border-amber-400 shadow-lg shadow-amber-500/20">
+            <div>
+              <h3 class="text-2xl font-bold text-white">Presenter Ali</h3>
+              <p class="text-amber-400 text-xs font-mono-custom font-medium mt-0.5">Business Partner & Podcast Host</p>
+              <p class="text-slate-400 text-xs mt-1">Africa's Largest Forex Podcast (500K+ Subs)</p>
+            </div>
+          </div>
+          <p class="text-slate-300 text-xs leading-relaxed mb-4">
+            Presenter Ali operates the biggest Forex Podcast platform in Africa with over <strong>500,000 subscribers</strong>.
+          </p>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            As business partners, Odipo and Presenter Ali work together scouting, vetting, and accelerating top trading talent through real market mentorship and funded trader development.
+          </p>
+        </div>
+      </div>
+
+      <!-- Podcast Video Embeds -->
+      <div class="mt-12 glass-card rounded-3xl p-8 border border-slate-800">
+        <h4 class="text-xl font-bold text-white mb-6 text-center">Featured Podcast Sessions</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="aspect-video rounded-xl overflow-hidden border border-slate-800">
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/O0mUlFJsRN0?start=701" title="Podcast 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="aspect-video rounded-xl overflow-hidden border border-slate-800">
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/nXlg3rHxvxA?start=307" title="Podcast 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ONE ON ONE ACCESS SECTION -->
+  <section id="one-on-one" class="py-24 border-t border-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-amber-400 text-xs font-mono-custom uppercase tracking-widest">Selective Mentorship</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">One on One Access</h2>
+        <p class="text-slate-400 text-xs mt-2">Personalized mentorship tiers to accelerate profitability and pass prop firm challenges.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Tier 1 -->
+        <div class="glass-card rounded-3xl p-8 border border-slate-800 flex flex-col justify-between">
+          <div>
+            <span class="text-slate-400 text-xs font-mono-custom uppercase tracking-wider">Standard Tier</span>
+            <h3 class="text-2xl font-bold text-white mt-2">Core Mentorship</h3>
+            <p class="text-amber-400 font-extrabold text-xl mt-2 font-mono-custom">$599</p>
+            <ul class="text-xs text-slate-300 space-y-3 mt-6">
+              <li>✓ Full Pivot Levels Masterclass</li>
+              <li>✓ FX, Metals & Indices Framework</li>
+              <li>✓ Community Access & Daily Recaps</li>
+            </ul>
+          </div>
+          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-slate-800 hover:bg-slate-700 text-white transition-all">
+            Apply Now to Join
+          </button>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="glass-card rounded-3xl p-8 border-2 border-[#00F2FE]/80 relative flex flex-col justify-between animate-glow">
+          <div>
+            <span class="text-[#00F2FE] text-xs font-mono-custom uppercase tracking-wider">Accelerated Tier</span>
+            <h3 class="text-2xl font-bold text-white mt-2">Pro Mentorship</h3>
+            <p class="text-[#00F2FE] font-extrabold text-xl mt-2 font-mono-custom">$750 – $1,500</p>
+            <ul class="text-xs text-slate-300 space-y-3 mt-6">
+              <li>✓ Everything in Standard</li>
+              <li>✓ Prop Firm Challenge Support</li>
+              <li>✓ Weekly Group Coaching Calls</li>
+              <li>✓ 10RR Execution Playbook</li>
+            </ul>
+          </div>
+          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:scale-105 transition-all">
+            Apply Now to Join
+          </button>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="glass-card rounded-3xl p-8 border border-amber-500/50 flex flex-col justify-between">
+          <div>
+            <span class="text-amber-400 text-xs font-mono-custom uppercase tracking-wider">1-on-1 VIP Tier</span>
+            <h3 class="text-2xl font-bold text-white mt-2">Personalized VIP</h3>
+            <p class="text-amber-400 font-extrabold text-xl mt-2 font-mono-custom">$2,000+</p>
+            <ul class="text-xs text-slate-300 space-y-3 mt-6">
+              <li>✓ Direct 1-on-1 Access to Odipo</li>
+              <li>✓ Customized Trading Plan & Portfolio Review</li>
+              <li>✓ Full Prop Firm Pass & Scale Protocol</li>
+              <li>✓ Priority Direct Channel Access</li>
+            </ul>
+          </div>
+          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 hover:scale-105 transition-all">
+            Apply Now to Join
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE FAQ ACCORDION PAGE -->
+  <section id="faq" class="py-24 border-t border-slate-900 bg-[#05070B]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <span class="text-[#00F2FE] text-xs font-mono-custom uppercase tracking-widest">FAQ</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
+          <button onclick="toggleFAQ(1)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
+            <span>What trading methodology does Data-Based FX use?</span>
+            <span id="faqIcon1" class="text-[#00F2FE] text-xl font-bold transition-transform">&plus;</span>
+          </button>
+          <div id="faqContent1" class="hidden px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
+            We trade one data-proven approach called the <strong>Pivot Levels Strategy</strong> across FX, Metals (Gold), and Indices. It combines structural price action, liquidity sweeps, and high-probability risk-reward ratios (targeting 10RR setups).
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
+          <button onclick="toggleFAQ(2)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
+            <span>Do I need prior trading experience to join?</span>
+            <span id="faqIcon2" class="text-[#00F2FE] text-xl font-bold transition-transform">&plus;</span>
+          </button>
+          <div id="faqContent2" class="hidden px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
+            No. Our mentorship programs accommodate all levels—from beginners mastering foundational risk management to advanced traders passing prop firm challenges.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
+          <button onclick="toggleFAQ(3)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
+            <span>Which broker or platform do I need?</span>
+            <span id="faqIcon3" class="text-[#00F2FE] text-xl font-bold transition-transform">&plus;</span>
+          </button>
+          <div id="faqContent3" class="hidden px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
+            You can use any regulated broker or prop firm that supports MetaTrader 4 (MT4), MetaTrader 5 (MT5), or cTrader.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
+          <button onclick="toggleFAQ(4)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
+            <span>How does the One on One Access onboarding work?</span>
+            <span id="faqIcon4" class="text-[#00F2FE] text-xl font-bold transition-transform">&plus;</span>
+          </button>
+          <div id="faqContent4" class="hidden px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
+            Click "Apply Now to Join" to fill out our screening form. We assess your background, trading budget, and capital goals before scheduling a direct onboarding call with Odipo the Trader.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ONBOARDING APPLICATION MODAL FUNNEL -->
+  <div id="funnelModal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="glass-card max-w-2xl w-full rounded-3xl p-8 border border-slate-700 max-h-[90vh] overflow-y-auto relative">
+      <button onclick="closeFunnelModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white font-bold text-xl">&times;</button>
+      
+      <div class="text-center mb-6">
+        <h3 class="text-2xl font-bold text-white">Application for One on One Access</h3>
+        <p class="text-xs text-slate-400 mt-1">Fill out this screening questionnaire to apply for mentorship with Odipo the Trader.</p>
+      </div>
+
+      <form id="funnelForm" onsubmit="handleFormSubmit(event)" class="space-y-4 text-xs text-slate-200">
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">1. Current Employment Status</label>
+          <select class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white focus:border-[#00F2FE] outline-none">
+            <option>Employed</option>
+            <option>Self-Employed / Business Owner</option>
+            <option>Student</option>
+            <option>Jobless / Unemployed</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">2. Target Monthly Income Goal from Trading</label>
+          <select class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white focus:border-[#00F2FE] outline-none">
+            <option>Financial Freedom / Full-Time Trading</option>
+            <option>Quit My Current Job</option>
+            <option>Supplemental Income ($1,000 - $3,000/mo)</option>
+            <option>Scale Capital via Prop Firms ($10,000+/mo)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">3. Available Capital for Future Trading (Once Profitable)</label>
+          <select class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white focus:border-[#00F2FE] outline-none">
+            <option>Less than $1,000</option>
+            <option>$1,000 to $2,000</option>
+            <option>$2,000 to $5,000</option>
+            <option>$5,000 to $10,000</option>
+            <option>More than $10,000</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">4. Amount You Can Invest TODAY for Coaching/Mentorship</label>
+          <select class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white focus:border-[#00F2FE] outline-none">
+            <option>Standard Tier (~$599)</option>
+            <option>Accelerated Tier ($750 – $1,500)</option>
+            <option>Personalized 1-on-1 VIP Tier ($2,000+)</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+          <div>
+            <label class="block font-bold text-slate-300 mb-1">Full Name</label>
+            <input type="text" required placeholder="John Doe" class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white outline-none focus:border-[#00F2FE]">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1">Telegram Handle / Phone</label>
+            <input type="text" required placeholder="@username or phone" class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white outline-none focus:border-[#00F2FE]">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-4 mt-4 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:scale-105 transition-all">
+          Submit Application
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FULL REGULATORY & RISK DISCLAIMER FOOTER -->
+  <footer class="py-16 border-t border-slate-900 bg-[#030508] text-slate-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
+        <!-- Logo Branding Column -->
+        <div class="lg:col-span-6">
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#00A8FF] to-[#00F2FE] flex items-center justify-center font-black text-slate-950 text-xs tracking-wider">
+              DBF
+            </div>
+            <span class="text-base font-extrabold tracking-wider text-white">
+              DATA-BASED <span class="text-[#00F2FE]">FX</span>
+            </span>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed max-w-md mb-6">
+            Systematic, quantitative market analytics and trade education. Empirically backtested Forex, Metals, and Indices strategies.
+          </p>
+          <!-- Social Icons -->
+          <div class="flex space-x-4 text-slate-300">
+            <a href="https://www.youtube.com/@odipothetrader" target="_blank" rel="noopener noreferrer" class="hover:text-[#00F2FE] transition-colors p-2 bg-slate-900/60 rounded-lg">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://t.me/dbfodipothetrader" target="_blank" rel="noopener noreferrer" class="hover:text-[#00F2FE] transition-colors p-2 bg-slate-900/60 rounded-lg">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.008-1.252-.241-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.141.119.098.152.228.166.321.016.109.032.329.016.488z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Navigation Columns -->
+        <div class="lg:col-span-3">
+          <h5 class="text-xs font-mono-custom uppercase tracking-widest text-slate-200 mb-4">NAVIGATION</h5>
+          <ul class="space-y-2.5 text-xs text-slate-400 font-medium">
+            <li><a href="#backtested-results" class="hover:text-white transition-colors">Overview & Results</a></li>
+            <li><a href="#breakdowns" class="hover:text-white transition-colors">Verified Breakdowns</a></li>
+            <li><a href="#calculator" class="hover:text-white transition-colors">Risk Calculator</a></li>
+            <li><a href="#mentors" class="hover:text-white transition-colors">Mentors (Odipo)</a></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-3">
+          <h5 class="text-xs font-mono-custom uppercase tracking-widest text-slate-200 mb-4">LEGAL & SUPPORT</h5>
+          <ul class="space-y-2.5 text-xs text-slate-400 font-medium">
+            <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+            <li><a href="#one-on-one" class="hover:text-white transition-colors">One on One Access Tiers</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Institutional Disclaimer Block -->
+      <div class="border-t border-slate-900 pt-8 text-slate-500 font-mono-custom text-[10px] leading-relaxed space-y-3">
+        <p>
+          <strong>RISK WARNING & DISCLAIMER:</strong> Trading foreign exchange (Forex), commodities (such as Gold/XAUUSD), and Contracts for Difference (CFDs) carries a high level of risk and may not be suitable for all investors. Leverage creates additional risk and loss exposure. Before deciding to trade, carefully consider your investment objectives, level of experience, and risk appetite. You could sustain a loss of some or all of your initial investment; therefore, do not invest money that you cannot afford to lose.
+        </p>
+        <p>
+          Data-Based FX (databasedfx.com) provides educational market analysis, statistical research models, and community discussion. We do not operate as registered investment advisors or financial brokers. None of the content, signal previews, or calculator metrics constitute direct financial advice.
+        </p>
+        <div class="flex justify-between items-center pt-4 text-slate-600">
+          <span>&copy; 2026 Data-Based FX (databasedfx.com). All rights reserved.</span>
+          <span>Built for Systematic Traders</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    // Funnel Modal Controls
+    function openFunnelModal() {
+      document.getElementById('funnelModal').classList.remove('hidden');
+    }
+    function closeFunnelModal() {
+      document.getElementById('funnelModal').classList.add('hidden');
+    }
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      alert('Application submitted successfully! Our team will review your profile and reach out via Telegram/Phone.');
+      closeFunnelModal();
+    }
+
+    // FAQ Accordion Toggle Logic
+    function toggleFAQ(num) {
+      const content = document.getElementById(`faqContent${num}`);
+      const icon = document.getElementById(`faqIcon${num}`);
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.innerHTML = '&minus;';
+      } else {
+        content.classList.add('hidden');
+        icon.innerHTML = '&plus;';
+      }
+    }
+
+    // Dynamic Lot Size Calculator Engine
+    function calculateLotSize() {
+      const balance = parseFloat(document.getElementById('calcBalance').value) || 0;
+      const riskPct = parseFloat(document.getElementById('calcRisk').value) || 0;
+      const instrument = document.getElementById('calcInstrument').value;
+      const slPips = parseFloat(document.getElementById('calcSL').value) || 1;
+
+      const monetaryRisk = balance * (riskPct / 100);
+
+      let lotSize = 0;
+      let units = 0;
+
+      if (instrument === 'EURUSD' || instrument === 'GBPUSD') {
+        // Standard Forex ($10 per pip per lot)
+        lotSize = monetaryRisk / (slPips * 10);
+        units = lotSize * 100000;
+      } else if (instrument === 'XAUUSD') {
+        // Gold ($10 per pip/dollar per lot)
+        lotSize = monetaryRisk / (slPips * 10);
+        units = lotSize * 100;
+      } else if (instrument === 'NAS100') {
+        // Indices ($1 per point per lot)
+        lotSize = monetaryRisk / slPips;
+        units = lotSize * 10;
+      }
+
+      document.getElementById('outputRisk').innerText = `$${monetaryRisk.toFixed(2)}`;
+      document.getElementById('outputLot').innerText = `${lotSize.toFixed(2)} Lots`;
+      document.getElementById('outputUnits').innerText = `${Math.round(units).toLocaleString()}`;
+    }
+
+    // Initial calculation on page load
+    window.onload = calculateLotSize;
+  </script>
+</body>
+</html>
