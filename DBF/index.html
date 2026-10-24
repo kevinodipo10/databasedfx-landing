@@ -25,8 +25,14 @@
       0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.25); }
       50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
     }
+    @keyframes flash-input {
+      0%, 100% { border-color: rgba(0, 242, 254, 0.4); box-shadow: 0 0 10px rgba(0, 242, 254, 0.2); }
+      50% { border-color: #00F2FE; box-shadow: 0 0 25px rgba(0, 242, 254, 0.8); }
+    }
+
     .animate-glow { animation: pulse-glow 3.5s infinite ease-in-out; }
     .animate-gold-glow { animation: gold-glow 3.5s infinite ease-in-out; }
+    .animate-flash { animation: flash-input 1.2s infinite ease-in-out; }
     
     .glass-card {
       background: rgba(11, 17, 28, 0.85);
@@ -34,13 +40,51 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
     
-    .glass-card-hover {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    /* Tier Hover Motion Effects */
+    .glass-card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     .glass-card-hover:hover {
       border-color: rgba(0, 242, 254, 0.4);
       box-shadow: 0 10px 30px -10px rgba(0, 242, 254, 0.25);
-      transform: translateY(-2px);
+      transform: translateY(-4px);
+    }
+    
+    .glass-card-hover-gold { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .glass-card-hover-gold:hover {
+      border-color: rgba(255, 215, 0, 0.7);
+      box-shadow: 0 10px 35px -5px rgba(255, 215, 0, 0.35);
+      transform: translateY(-4px);
+    }
+
+    .glass-card-hover-purple { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .glass-card-hover-purple:hover {
+      border-color: rgba(168, 85, 247, 0.8);
+      box-shadow: 0 10px 35px -5px rgba(168, 85, 247, 0.4);
+      transform: translateY(-4px);
+    }
+
+    /* Option Selection Card States */
+    .option-card {
+      transition: all 0.25s ease;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .option-card:hover {
+      border-color: rgba(0, 242, 254, 0.4);
+      background: rgba(0, 242, 254, 0.05);
+    }
+    .option-card.selected {
+      background: rgba(0, 242, 254, 0.12) !important;
+      border-color: #00F2FE !important;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
+    }
+    .radio-circle {
+      transition: all 0.25s ease;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    .option-card.selected .radio-circle {
+      border-color: #00F2FE;
+      background-color: #00F2FE;
+      box-shadow: 0 0 12px #00F2FE;
     }
 
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -52,8 +96,6 @@
   <!-- TOP NAVIGATION -->
   <header class="fixed top-0 left-0 w-full z-50 glass-card border-b border-slate-900/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      
-      <!-- Logo Branding -->
       <a href="#" class="flex items-center space-x-3 group">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#00A8FF] to-[#00F2FE] flex items-center justify-center font-black text-slate-950 text-sm tracking-wider shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
           DBF
@@ -68,20 +110,18 @@
         </div>
       </a>
 
-      <!-- Navigation Links -->
       <nav class="hidden lg:flex items-center space-x-8 text-xs font-semibold tracking-wide text-slate-300">
         <a href="#backtested-results" class="hover:text-[#00F2FE] transition-colors">Backtested Results</a>
         <a href="#breakdowns" class="hover:text-[#00F2FE] transition-colors">Verified Breakdowns</a>
         <a href="#calculator" class="hover:text-[#00F2FE] transition-colors">Risk Calculator</a>
         <a href="#mentors" class="hover:text-[#00F2FE] transition-colors">Mentors</a>
-        <a href="#one-on-one" class="hover:text-amber-400 transition-colors">One on One Access</a>
+        <a href="#one-on-one" class="hover:text-amber-400 transition-colors">One-on-One Access</a>
         <a href="#faq" class="hover:text-[#00F2FE] transition-colors">FAQ</a>
       </nav>
 
-      <!-- CTA Button -->
-      <button onclick="openFunnelModal()" class="px-5 py-2.5 rounded-xl text-xs font-extrabold tracking-wide bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:scale-105 transition-all duration-300 animate-glow shadow-lg shadow-cyan-500/25 flex items-center space-x-2">
+      <a href="#one-on-one" class="px-5 py-2.5 rounded-xl text-xs font-extrabold tracking-wide bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:scale-105 transition-all duration-300 animate-glow shadow-lg shadow-cyan-500/25 flex items-center space-x-2">
         <span>Apply Now to Join</span>
-      </button>
+      </a>
     </div>
   </header>
 
@@ -89,14 +129,11 @@
   <section class="relative pt-36 pb-24 overflow-hidden">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-950/30 via-[#05070B] to-[#05070B]"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-      
-      <!-- Tag Badge -->
       <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full glass-card border border-[#00F2FE]/30 text-[#00F2FE] text-[11px] font-mono-custom mb-8 animate-glow">
         <span class="w-2 h-2 rounded-full bg-[#00F2FE] animate-pulse"></span>
         <span>INSTITUTIONAL DATA & SYSTEMATIC EXECUTION</span>
       </div>
 
-      <!-- Main Headline -->
       <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight max-w-5xl mx-auto mb-6">
         Precision-Driven Trading Backed by <br class="hidden sm:inline">
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00F2FE] via-cyan-300 to-amber-400">
@@ -108,11 +145,10 @@
         Eliminate emotional bias across <strong>Forex, Metals (Gold), and Indices</strong>. Access systematic probabilities, automated position sizing tools, and high-confluence 10RR setups.
       </p>
 
-      <!-- CTA Action Group -->
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <button onclick="openFunnelModal()" class="w-full sm:w-auto px-8 py-4 rounded-xl text-xs font-black uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:shadow-[0_0_35px_rgba(0,242,254,0.6)] hover:scale-105 transition-all duration-300">
+        <a href="#one-on-one" class="w-full sm:w-auto px-8 py-4 rounded-xl text-xs font-black uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:shadow-[0_0_35px_rgba(0,242,254,0.6)] hover:scale-105 transition-all duration-300 text-center">
           Apply Now to Join
-        </button>
+        </a>
         <a href="#calculator" class="w-full sm:w-auto px-8 py-4 rounded-xl text-xs font-semibold glass-card text-slate-300 hover:text-white hover:border-[#00F2FE]/40 transition-all text-center">
           Explore Calculator & Analysis &rarr;
         </a>
@@ -134,7 +170,6 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- FX Asset Box -->
         <div class="glass-card glass-card-hover rounded-2xl p-6 border border-slate-800">
           <div class="aspect-video bg-[#080D1A] rounded-xl mb-4 flex items-center justify-center border border-slate-800 overflow-hidden relative">
             <span class="text-slate-500 text-xs font-mono-custom text-center px-4">[ FX Backtest Screenshot Placeholder ]</span>
@@ -147,7 +182,6 @@
           </div>
         </div>
 
-        <!-- Metals Asset Box -->
         <div class="glass-card glass-card-hover rounded-2xl p-6 border border-slate-800">
           <div class="aspect-video bg-[#080D1A] rounded-xl mb-4 flex items-center justify-center border border-slate-800 overflow-hidden relative">
             <span class="text-slate-500 text-xs font-mono-custom text-center px-4">[ Metals (Gold/XAUUSD) Screenshot Placeholder ]</span>
@@ -160,7 +194,6 @@
           </div>
         </div>
 
-        <!-- Indices Asset Box -->
         <div class="glass-card glass-card-hover rounded-2xl p-6 border border-slate-800">
           <div class="aspect-video bg-[#080D1A] rounded-xl mb-4 flex items-center justify-center border border-slate-800 overflow-hidden relative">
             <span class="text-slate-500 text-xs font-mono-custom text-center px-4">[ Indices (NAS100 / US30) Screenshot Placeholder ]</span>
@@ -186,7 +219,6 @@
       </div>
 
       <div class="flex space-x-6 overflow-x-auto no-scrollbar pb-6">
-        <!-- FX Card -->
         <div class="min-w-[300px] sm:min-w-[350px] glass-card p-6 rounded-2xl border border-slate-800 flex-shrink-0">
           <div class="h-40 bg-[#080D1A] rounded-lg mb-4 flex items-center justify-center border border-slate-800">
             <span class="text-slate-600 text-xs font-mono-custom">[ Major FX Backtest Chart ]</span>
@@ -200,7 +232,6 @@
           </div>
         </div>
 
-        <!-- Gold Card -->
         <div class="min-w-[300px] sm:min-w-[350px] glass-card p-6 rounded-2xl border border-slate-800 flex-shrink-0">
           <div class="h-40 bg-[#080D1A] rounded-lg mb-4 flex items-center justify-center border border-slate-800">
             <span class="text-slate-600 text-xs font-mono-custom">[ Gold (XAUUSD) Backtest Chart ]</span>
@@ -214,7 +245,6 @@
           </div>
         </div>
 
-        <!-- Indices Card -->
         <div class="min-w-[300px] sm:min-w-[350px] glass-card p-6 rounded-2xl border border-slate-800 flex-shrink-0">
           <div class="h-40 bg-[#080D1A] rounded-lg mb-4 flex items-center justify-center border border-slate-800">
             <span class="text-slate-600 text-xs font-mono-custom">[ Indices Backtest Chart ]</span>
@@ -231,12 +261,10 @@
     </div>
   </section>
 
-  <!-- INTERACTIVE RISK & POSITION SIZE CALCULATOR PAGE -->
+  <!-- INTERACTIVE RISK CALCULATOR -->
   <section id="calculator" class="py-24 border-t border-slate-900 bg-[#05070B]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        
-        <!-- Left Explanatory Column -->
         <div class="lg:col-span-5">
           <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-[#00F2FE]/30 text-[#00F2FE] text-[10px] font-mono-custom mb-4">
             <span>💻 QUANTITATIVE RISK TOOL</span>
@@ -247,7 +275,6 @@
           <p class="text-slate-400 text-sm leading-relaxed mb-6">
             Never guess your lot size again. Risk management is the single deciding factor between funded consistency and account blowouts.
           </p>
-          
           <ul class="space-y-4 text-xs text-slate-300">
             <li class="flex items-start space-x-3">
               <span class="text-[#00F2FE] font-bold text-base">✓</span>
@@ -264,7 +291,6 @@
           </ul>
         </div>
 
-        <!-- Right Calculator Box (Matching Screenshot UI) -->
         <div class="lg:col-span-7">
           <div class="glass-card rounded-3xl p-8 border border-slate-800 shadow-2xl relative">
             <div class="flex justify-between items-center mb-6 border-b border-slate-800/80 pb-4">
@@ -273,7 +299,6 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-              <!-- Account Balance Input -->
               <div>
                 <label class="block text-[10px] font-mono-custom uppercase tracking-wider text-slate-400 mb-2">Account Balance ($)</label>
                 <div class="relative">
@@ -282,7 +307,6 @@
                 </div>
               </div>
 
-              <!-- Risk Percentage Input -->
               <div>
                 <label class="block text-[10px] font-mono-custom uppercase tracking-wider text-slate-400 mb-2">Risk Percentage (%)</label>
                 <div class="relative">
@@ -291,7 +315,6 @@
                 </div>
               </div>
 
-              <!-- Instrument Select -->
               <div>
                 <label class="block text-[10px] font-mono-custom uppercase tracking-wider text-slate-400 mb-2">Trading Instrument</label>
                 <select id="calcInstrument" onchange="calculateLotSize()" class="w-full bg-[#080D1A] border border-slate-800 rounded-xl py-2.5 px-4 text-white font-mono-custom text-sm focus:border-[#00F2FE] outline-none transition-colors">
@@ -302,14 +325,12 @@
                 </select>
               </div>
 
-              <!-- Stop Loss Pips Input -->
               <div>
                 <label class="block text-[10px] font-mono-custom uppercase tracking-wider text-slate-400 mb-2">Stop Loss (Pips / Points)</label>
                 <input type="number" id="calcSL" value="25" oninput="calculateLotSize()" class="w-full bg-[#080D1A] border border-slate-800 rounded-xl py-2.5 px-4 text-white font-mono-custom text-sm focus:border-[#00F2FE] outline-none transition-colors">
               </div>
             </div>
 
-            <!-- Output Display Box -->
             <div class="bg-[#03060C] border border-slate-800/80 rounded-2xl p-6 grid grid-cols-3 gap-4 text-center">
               <div>
                 <span class="block text-[9px] font-mono-custom text-slate-500 uppercase tracking-wider mb-1">Monetary Risk</span>
@@ -324,10 +345,8 @@
                 <span id="outputUnits" class="text-lg font-bold text-slate-200 font-mono-custom">40,000</span>
               </div>
             </div>
-
           </div>
         </div>
-
       </div>
     </div>
   </section>
@@ -341,7 +360,6 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-        <!-- Odipo Profile -->
         <div class="glass-card rounded-3xl p-8 border border-slate-800 relative">
           <div class="flex flex-col sm:flex-row items-center space-y-6 sm:space-y-0 sm:space-x-6 mb-6">
             <img src="odipo.jpeg" alt="Odipo the Trader" class="w-32 h-32 rounded-2xl object-cover border-2 border-[#00F2FE] shadow-lg shadow-cyan-500/20">
@@ -359,7 +377,6 @@
           </p>
         </div>
 
-        <!-- Presenter Ali Profile -->
         <div class="glass-card rounded-3xl p-8 border border-slate-800 relative">
           <div class="flex flex-col sm:flex-row items-center space-y-6 sm:space-y-0 sm:space-x-6 mb-6">
             <img src="ali.jpeg" alt="Presenter Ali" class="w-32 h-32 rounded-2xl object-cover border-2 border-amber-400 shadow-lg shadow-amber-500/20">
@@ -378,7 +395,6 @@
         </div>
       </div>
 
-      <!-- Podcast Video Embeds -->
       <div class="mt-12 glass-card rounded-3xl p-8 border border-slate-800">
         <h4 class="text-xl font-bold text-white mb-6 text-center">Featured Podcast Sessions</h4>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -393,68 +409,187 @@
     </div>
   </section>
 
-  <!-- ONE ON ONE ACCESS SECTION -->
+  <!-- ONE-ON-ONE ACCESS SECTION -->
   <section id="one-on-one" class="py-24 border-t border-slate-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-3xl mx-auto mb-16">
         <span class="text-amber-400 text-xs font-mono-custom uppercase tracking-widest">Selective Mentorship</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">One on One Access</h2>
-        <p class="text-slate-400 text-xs mt-2">Personalized mentorship tiers to accelerate profitability and pass prop firm challenges.</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-2">One-on-One Access</h2>
+        <p class="text-slate-400 text-xs mt-2">Elite mentorship tiers engineered for rapid execution mastery and guaranteed capital scaling.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Tier 1 -->
-        <div class="glass-card rounded-3xl p-8 border border-slate-800 flex flex-col justify-between">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Tier 1: Standard Tier -->
+        <div class="glass-card rounded-3xl p-6 border border-slate-800 flex flex-col justify-between glass-card-hover">
           <div>
-            <span class="text-slate-400 text-xs font-mono-custom uppercase tracking-wider">Standard Tier</span>
-            <h3 class="text-2xl font-bold text-white mt-2">Core Mentorship</h3>
-            <p class="text-amber-400 font-extrabold text-xl mt-2 font-mono-custom">$599</p>
+            <span class="text-slate-400 text-[10px] font-mono-custom uppercase tracking-wider">FOUNDATIONAL PATH</span>
+            <h3 class="text-xl font-extrabold text-white mt-1">Standard Tier</h3>
+            <div class="inline-block px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono-custom mt-3">
+              ⏱ Profitability Horizon: &le; 3 Months
+            </div>
+
             <ul class="text-xs text-slate-300 space-y-3 mt-6">
-              <li>✓ Full Pivot Levels Masterclass</li>
-              <li>✓ FX, Metals & Indices Framework</li>
-              <li>✓ Community Access & Daily Recaps</li>
+              <li class="flex items-start space-x-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span>Pre-shot high-definition video masterclass course</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span>Weekly live trade setup review & video recap</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span>DBF Quantitative Trading Journal & Risk Engine</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span>Proprietary Lot Size Calculator Access</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-emerald-400 font-bold">✓</span>
+                <span>Core Community Hub & Daily Pivot Recaps</span>
+              </li>
             </ul>
           </div>
-          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-slate-800 hover:bg-slate-700 text-white transition-all">
+
+          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-slate-800 hover:bg-slate-700 text-white transition-all border border-slate-700">
             Apply Now to Join
           </button>
         </div>
 
-        <!-- Tier 2 -->
-        <div class="glass-card rounded-3xl p-8 border-2 border-[#00F2FE]/80 relative flex flex-col justify-between animate-glow">
+        <!-- Tier 2: Accelerated Tier -->
+        <div class="glass-card rounded-3xl p-6 border border-[#00F2FE]/50 flex flex-col justify-between glass-card-hover relative">
           <div>
-            <span class="text-[#00F2FE] text-xs font-mono-custom uppercase tracking-wider">Accelerated Tier</span>
-            <h3 class="text-2xl font-bold text-white mt-2">Pro Mentorship</h3>
-            <p class="text-[#00F2FE] font-extrabold text-xl mt-2 font-mono-custom">$750 – $1,500</p>
+            <span class="text-[#00F2FE] text-[10px] font-mono-custom uppercase tracking-wider">FAST-TRACK SCALING</span>
+            <h3 class="text-xl font-extrabold text-white mt-1">Accelerated Tier</h3>
+            <div class="inline-block px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-[#00F2FE] text-[10px] font-mono-custom mt-3">
+              ⚡ Profitability Horizon: &le; 2 Months
+            </div>
+
             <ul class="text-xs text-slate-300 space-y-3 mt-6">
-              <li>✓ Everything in Standard</li>
-              <li>✓ Prop Firm Challenge Support</li>
-              <li>✓ Weekly Group Coaching Calls</li>
-              <li>✓ 10RR Execution Playbook</li>
+              <li class="flex items-start space-x-2">
+                <span class="text-[#00F2FE] font-bold">✓</span>
+                <span><strong>Everything in Standard Tier included</strong></span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-[#00F2FE] font-bold">✓</span>
+                <span>Live coaching with Odipo or Presenter Ali (2-3x per week)</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-[#00F2FE] font-bold">✓</span>
+                <span>TradingView Trading Indicator (3-Month Access)</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-[#00F2FE] font-bold">✓</span>
+                <span>Exclusive Pivot Levels Strategy E-Book</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-[#00F2FE] font-bold">✓</span>
+                <span>Earn-While-You-Learn Live Execution Guidance</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-[#00F2FE] font-bold">✓</span>
+                <span>Prop Firm Challenge Passing Protocol</span>
+              </li>
             </ul>
           </div>
-          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:scale-105 transition-all">
+
+          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:scale-105 transition-all shadow-lg shadow-cyan-500/20">
             Apply Now to Join
           </button>
         </div>
 
-        <!-- Tier 3 -->
-        <div class="glass-card rounded-3xl p-8 border border-amber-500/50 flex flex-col justify-between">
+        <!-- Tier 3: 1-on-1 VIP Tier -->
+        <div class="glass-card rounded-3xl p-6 border-2 border-amber-400/80 flex flex-col justify-between relative glass-card-hover-gold animate-gold-glow">
           <div>
-            <span class="text-amber-400 text-xs font-mono-custom uppercase tracking-wider">1-on-1 VIP Tier</span>
-            <h3 class="text-2xl font-bold text-white mt-2">Personalized VIP</h3>
-            <p class="text-amber-400 font-extrabold text-xl mt-2 font-mono-custom">$2,000+</p>
+            <div class="absolute -top-3 right-6 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-[9px] uppercase tracking-wider px-3 py-0.5 rounded-full shadow-md">
+              MOST POPULAR
+            </div>
+            <span class="text-amber-400 text-[10px] font-mono-custom uppercase tracking-wider">DIRECT MENTORSHIP</span>
+            <h3 class="text-xl font-extrabold text-white mt-1">1-on-1 VIP Tier</h3>
+            <div class="inline-block px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-mono-custom mt-3">
+              🚀 Profitability Horizon: Immediate (&le; 2 Months)
+            </div>
+
             <ul class="text-xs text-slate-300 space-y-3 mt-6">
-              <li>✓ Direct 1-on-1 Access to Odipo</li>
-              <li>✓ Customized Trading Plan & Portfolio Review</li>
-              <li>✓ Full Prop Firm Pass & Scale Protocol</li>
-              <li>✓ Priority Direct Channel Access</li>
+              <li class="flex items-start space-x-2">
+                <span class="text-amber-400 font-bold">✓</span>
+                <span><strong>Everything in lower tiers included</strong></span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-amber-400 font-bold">✓</span>
+                <span>First Lesson: Psychology & Risk Management from Day 1</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-amber-400 font-bold">✓</span>
+                <span>Two Proprietary 10RR Indicators (4-Month License)</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-amber-400 font-bold">✓</span>
+                <span>Priority Signal Alerts & Trade Limits set before lower tiers</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-amber-400 font-bold">✓</span>
+                <span>Direct 1-on-1 Analysis & Reviews every 2 days</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-amber-400 font-bold">✓</span>
+                <span>1-on-1 Personalized Training Sessions every 2 days</span>
+              </li>
             </ul>
           </div>
-          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 hover:scale-105 transition-all">
+
+          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 hover:scale-105 transition-all shadow-lg shadow-amber-500/20">
             Apply Now to Join
           </button>
         </div>
+
+        <!-- Tier 4: Turbo Charged Special -->
+        <div class="glass-card rounded-3xl p-6 border-2 border-purple-500/80 flex flex-col justify-between relative bg-gradient-to-b from-purple-950/30 to-[#05070B] shadow-2xl glass-card-hover-purple">
+          <div>
+            <div class="absolute -top-3 right-6 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-black text-[9px] uppercase tracking-wider px-3 py-0.5 rounded-full shadow-md">
+              ULTIMATE INSTITUTIONAL
+            </div>
+            <span class="text-purple-400 text-[10px] font-mono-custom uppercase tracking-wider">1-ON-1 VIP TIER</span>
+            <h3 class="text-xl font-extrabold text-white mt-1">Turbo Charged Special</h3>
+            <div class="inline-block px-2.5 py-1 rounded-md bg-purple-500/20 border border-purple-500/40 text-purple-300 text-[10px] font-mono-custom mt-3">
+              👑 At Your Service Super-Premium
+            </div>
+
+            <ul class="text-xs text-slate-300 space-y-3 mt-6">
+              <li class="flex items-start space-x-2">
+                <span class="text-purple-400 font-bold">✓</span>
+                <span><strong>FULL LIFETIME ACCESS across ALL tiers & future tools</strong></span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-purple-400 font-bold">✓</span>
+                <span>Mentee dictates exact schedule & call times upon request</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-purple-400 font-bold">✓</span>
+                <span><strong>Full Trade Entry Automation</strong> (Zero manual entries to eliminate human error)</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-purple-400 font-bold">✓</span>
+                <span>Account automated from Day 1 so you earn while learning</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-purple-400 font-bold">✓</span>
+                <span>Buy back your time immediately & scale to major capital</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-purple-400 font-bold">✓</span>
+                <span>Reserved exclusively for traders aiming to make it massive</span>
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-400 text-white hover:scale-105 transition-all shadow-lg shadow-purple-500/30">
+            Apply Now for Turbo VIP
+          </button>
+        </div>
+
       </div>
     </div>
   </section>
@@ -468,7 +603,6 @@
       </div>
 
       <div class="space-y-4">
-        <!-- FAQ 1 -->
         <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
           <button onclick="toggleFAQ(1)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
             <span>What trading methodology does Data-Based FX use?</span>
@@ -479,7 +613,6 @@
           </div>
         </div>
 
-        <!-- FAQ 2 -->
         <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
           <button onclick="toggleFAQ(2)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
             <span>Do I need prior trading experience to join?</span>
@@ -490,7 +623,6 @@
           </div>
         </div>
 
-        <!-- FAQ 3 -->
         <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
           <button onclick="toggleFAQ(3)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
             <span>Which broker or platform do I need?</span>
@@ -501,10 +633,9 @@
           </div>
         </div>
 
-        <!-- FAQ 4 -->
         <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
           <button onclick="toggleFAQ(4)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
-            <span>How does the One on One Access onboarding work?</span>
+            <span>How does the One-on-One Access onboarding work?</span>
             <span id="faqIcon4" class="text-[#00F2FE] text-xl font-bold transition-transform">&plus;</span>
           </button>
           <div id="faqContent4" class="hidden px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
@@ -515,81 +646,196 @@
     </div>
   </section>
 
-  <!-- ONBOARDING APPLICATION MODAL FUNNEL -->
-  <div id="funnelModal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="glass-card max-w-2xl w-full rounded-3xl p-8 border border-slate-700 max-h-[90vh] overflow-y-auto relative">
-      <button onclick="closeFunnelModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white font-bold text-xl">&times;</button>
+  <!-- REVISED ACCORDION ONBOARDING QUESTIONNAIRE MODAL -->
+  <div id="funnelModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
+    <div class="glass-card max-w-2xl w-full rounded-3xl p-6 sm:p-8 border border-slate-700 max-h-[92vh] overflow-y-auto relative shadow-2xl">
+      <button onclick="closeFunnelModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white font-bold text-2xl transition-colors">&times;</button>
       
-      <div class="text-center mb-6">
-        <h3 class="text-2xl font-bold text-white">Application for One on One Access</h3>
-        <p class="text-xs text-slate-400 mt-1">Fill out this screening questionnaire to apply for mentorship with Odipo the Trader.</p>
+      <div class="text-center mb-8">
+        <span class="text-[#00F2FE] text-[10px] font-mono-custom uppercase tracking-widest">Selective Onboarding Application</span>
+        <h3 class="text-2xl font-extrabold text-white mt-1">One-on-One Access Qualification</h3>
+        <p class="text-xs text-slate-400 mt-1">Complete the chronological questions below to unlock your direct onboarding interview.</p>
       </div>
 
-      <form id="funnelForm" onsubmit="handleFormSubmit(event)" class="space-y-4 text-xs text-slate-200">
-        <div>
-          <label class="block font-bold text-slate-300 mb-1">1. Current Employment Status</label>
-          <select class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white focus:border-[#00F2FE] outline-none">
-            <option>Employed</option>
-            <option>Self-Employed / Business Owner</option>
-            <option>Student</option>
-            <option>Jobless / Unemployed</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-300 mb-1">2. Target Monthly Income Goal from Trading</label>
-          <select class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white focus:border-[#00F2FE] outline-none">
-            <option>Financial Freedom / Full-Time Trading</option>
-            <option>Quit My Current Job</option>
-            <option>Supplemental Income ($1,000 - $3,000/mo)</option>
-            <option>Scale Capital via Prop Firms ($10,000+/mo)</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-300 mb-1">3. Available Capital for Future Trading (Once Profitable)</label>
-          <select class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white focus:border-[#00F2FE] outline-none">
-            <option>Less than $1,000</option>
-            <option>$1,000 to $2,000</option>
-            <option>$2,000 to $5,000</option>
-            <option>$5,000 to $10,000</option>
-            <option>More than $10,000</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block font-bold text-slate-300 mb-1">4. Amount You Can Invest TODAY for Coaching/Mentorship</label>
-          <select class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white focus:border-[#00F2FE] outline-none">
-            <option>Standard Tier (~$599)</option>
-            <option>Accelerated Tier ($750 – $1,500)</option>
-            <option>Personalized 1-on-1 VIP Tier ($2,000+)</option>
-          </select>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-          <div>
-            <label class="block font-bold text-slate-300 mb-1">Full Name</label>
-            <input type="text" required placeholder="John Doe" class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white outline-none focus:border-[#00F2FE]">
+      <form id="funnelForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+        
+        <!-- QUESTION 1 -->
+        <div id="qBlock-1" class="border border-slate-800 rounded-2xl p-5 bg-[#080D1A]/60 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-white">1. Current Employment Status</span>
+            <span id="qBadge-1" class="text-[9px] font-mono-custom px-2 py-0.5 rounded bg-cyan-950 text-[#00F2FE] border border-[#00F2FE]/30">Active</span>
           </div>
-          <div>
-            <label class="block font-bold text-slate-300 mb-1">Telegram Handle / Phone</label>
-            <input type="text" required placeholder="@username or phone" class="w-full bg-[#080D1A] border border-slate-700 rounded-xl p-3 text-white outline-none focus:border-[#00F2FE]">
+          
+          <div id="qOptions-1" class="space-y-2.5 mt-4">
+            <div onclick="selectOption(1, 'Employed', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">Employed (Full-Time / Part-Time)</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(1, 'Self-Employed / Business Owner', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">Self-Employed / Business Owner</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(1, 'Student', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">Student</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(1, 'Unemployed / Looking for Opportunities', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">Unemployed / Looking for Opportunities</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
           </div>
         </div>
 
-        <button type="submit" class="w-full py-4 mt-4 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:scale-105 transition-all">
-          Submit Application
-        </button>
+        <!-- QUESTION 2 -->
+        <div id="qBlock-2" class="border border-slate-800/50 rounded-2xl p-5 bg-[#080D1A]/20 opacity-50 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-white">2. Primary Trading Goal</span>
+            <span id="qBadge-2" class="text-[9px] font-mono-custom px-2 py-0.5 rounded bg-slate-900 text-slate-500">Locked</span>
+          </div>
+          
+          <div id="qOptions-2" class="space-y-2.5 hidden mt-4">
+            <div onclick="selectOption(2, 'Full-Time Financial Freedom', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">Full-Time Financial Freedom</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(2, 'Quit My Current Job within 6 Months', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">Quit My Current Job within 6 Months</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(2, 'Consistent Supplemental Income ($1,000 - $3,000/mo)', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">Consistent Supplemental Income ($1,000 - $3,000/mo)</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(2, 'Consistent Income of $3500 - $10,000 From My Own Capital', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">Consistent Income of $3,500 - $10,000 From My Own Capital</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(2, 'Scale Capital via Prop Firms ($10,000+/mo)', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">Scale Capital via Prop Firms ($10,000+/mo)</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(2, 'Consistent Income of $20,000 - $100,000 Plus From My Own Capital & Prop Firms.', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">Consistent Income of $20,000 - $100,000 Plus From My Own Capital & Prop Firms.</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUESTION 3 -->
+        <div id="qBlock-3" class="border border-slate-800/50 rounded-2xl p-5 bg-[#080D1A]/20 opacity-50 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-white">3. Capital Available to Trade Once Profitable</span>
+            <span id="qBadge-3" class="text-[9px] font-mono-custom px-2 py-0.5 rounded bg-slate-900 text-slate-500">Locked</span>
+          </div>
+          
+          <div id="qOptions-3" class="space-y-2.5 hidden mt-4">
+            <div onclick="selectOption(3, 'Under $1,000', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">Under $1,000</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(3, '$1,000 to $2,500', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">$1,000 to $2,500</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(3, '$2,500 to $5,000', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">$2,500 to $5,000</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(3, '$5,000 to $15,000', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">$5,000 to $15,000</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption(3, '$20,000 to $100,000+', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">$20,000 to $100,000+</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUESTION 4 (STAYS OPEN TILL Q5 IS CLICKED + PAUSE AUTO-ADVANCE) -->
+        <div id="qBlock-4" class="border border-slate-800/50 rounded-2xl p-5 bg-[#080D1A]/20 opacity-50 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-white">4. Available Amount TODAY to Invest In Your Tier If Your Profitability is Guaranteed</span>
+            <span id="qBadge-4" class="text-[9px] font-mono-custom px-2 py-0.5 rounded bg-slate-900 text-slate-500">Locked</span>
+          </div>
+
+          <div id="qOptions-4" class="space-y-3 hidden mt-4">
+            <div onclick="selectOption4(this, 'I can TODAY invest about $549 for Standard Tier')" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">I can TODAY invest about $549 for Standard Tier</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption4(this, 'I can invest TODAY between $800 to $1,500 for maximum features of Accelerated Tier')" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">I can invest TODAY between $800 to $1,500 for maximum features of Accelerated Tier</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption4(this, 'I can TODAY invest $2,000 and above for all features of 1-on-1 VIP Tier')" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">I can TODAY invest $2,000 and above for all features of 1-on-1 VIP Tier</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectOption4(this, 'I can invest $15,000 and above for all packages of Turbo Charged Special Tier')" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+              <span class="text-xs text-slate-200 font-medium">I can invest $15,000 and above for all packages of Turbo Charged Special Tier</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+
+            <!-- Mandatory User Input Field ($300 - $20,000) -->
+            <div class="pt-3 border-t border-slate-800/80">
+              <label class="block font-bold text-slate-300 text-xs mb-1.5">
+                Specific Amount in Mind Now in (USD) <span class="text-red-400">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute left-4 top-3 text-slate-500 font-mono-custom text-xs">$</span>
+                <input type="text" id="funnelAmountInput" oninput="handleAmountTyping(this)" placeholder="Enter digit amount (e.g. 1500)" class="w-full bg-[#03060C] border border-slate-700 rounded-xl py-2.5 pl-8 pr-4 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
+              </div>
+              <p id="amountError" class="text-[10px] text-red-400 font-mono-custom mt-1 hidden">
+                Please enter a valid numeric dollar amount between $300 and $20,000.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUESTION 5 (AUTO-COLLAPSES Q4 UPON TYPING + 2-MIN AUTO SUBMIT) -->
+        <div id="qBlock-5" onclick="onQuestion5Focus()" class="border border-slate-800/50 rounded-2xl p-5 bg-[#080D1A]/20 opacity-50 transition-all">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-white">5. Final Onboarding Information</span>
+            <span id="qBadge-5" class="text-[9px] font-mono-custom px-2 py-0.5 rounded bg-slate-900 text-slate-500">Locked</span>
+          </div>
+
+          <div id="qOptions-5" class="space-y-4 hidden mt-4">
+            <div>
+              <label class="block font-bold text-slate-300 text-xs mb-1">Full Name <span class="text-red-400">*</span></label>
+              <input type="text" id="funnelName" onfocus="onQuestion5Focus()" oninput="checkFormActivity()" required placeholder="John Doe" class="w-full bg-[#03060C] border border-slate-700 rounded-xl p-3 text-white text-xs outline-none focus:border-[#00F2FE]">
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-300 text-xs mb-1">WhatsApp Number (Include Country Code) <span class="text-red-400">*</span></label>
+              <input type="text" id="funnelPhone" onfocus="onQuestion5Focus()" required oninput="handlePhoneInput(this)" placeholder="+254700000000" class="w-full bg-[#03060C] border border-slate-700 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
+              <p id="phoneError" class="text-[10px] text-red-400 font-mono-custom mt-1 hidden">
+                Only digits are accepted after the (+) country code prefix.
+              </p>
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-300 text-xs mb-1">Email Address <span class="text-red-400">*</span></label>
+              <input type="email" id="funnelEmail" onfocus="onQuestion5Focus()" required oninput="validateEmailInput(this)" placeholder="name@example.com" class="w-full bg-[#03060C] border border-slate-700 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
+              <p id="emailError" class="text-[10px] text-red-400 font-mono-custom mt-1 hidden">
+                Please enter a valid email address containing a domain (e.g. name@domain.com).
+              </p>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full py-4 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] via-[#00F2FE] to-amber-400 text-slate-950 hover:scale-[1.02] transition-all shadow-lg shadow-cyan-500/25 mt-4">
+              Submit Application for Review
+            </button>
+          </div>
+        </div>
+
       </form>
     </div>
   </div>
 
-  <!-- FULL REGULATORY & RISK DISCLAIMER FOOTER -->
+  <!-- FOOTER -->
   <footer class="py-16 border-t border-slate-900 bg-[#030508] text-slate-400 text-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
-        <!-- Logo Branding Column -->
         <div class="lg:col-span-6">
           <div class="flex items-center space-x-3 mb-4">
             <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#00A8FF] to-[#00F2FE] flex items-center justify-center font-black text-slate-950 text-xs tracking-wider">
@@ -602,7 +848,6 @@
           <p class="text-slate-400 text-xs leading-relaxed max-w-md mb-6">
             Systematic, quantitative market analytics and trade education. Empirically backtested Forex, Metals, and Indices strategies.
           </p>
-          <!-- Social Icons -->
           <div class="flex space-x-4 text-slate-300">
             <a href="https://www.youtube.com/@odipothetrader" target="_blank" rel="noopener noreferrer" class="hover:text-[#00F2FE] transition-colors p-2 bg-slate-900/60 rounded-lg">
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
@@ -613,7 +858,6 @@
           </div>
         </div>
 
-        <!-- Navigation Columns -->
         <div class="lg:col-span-3">
           <h5 class="text-xs font-mono-custom uppercase tracking-widest text-slate-200 mb-4">NAVIGATION</h5>
           <ul class="space-y-2.5 text-xs text-slate-400 font-medium">
@@ -628,45 +872,256 @@
           <h5 class="text-xs font-mono-custom uppercase tracking-widest text-slate-200 mb-4">LEGAL & SUPPORT</h5>
           <ul class="space-y-2.5 text-xs text-slate-400 font-medium">
             <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
-            <li><a href="#one-on-one" class="hover:text-white transition-colors">One on One Access Tiers</a></li>
+            <li><a href="#one-on-one" class="hover:text-white transition-colors">One-on-One Access Tiers</a></li>
             <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
             <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
           </ul>
         </div>
       </div>
 
-      <!-- Institutional Disclaimer Block -->
       <div class="border-t border-slate-900 pt-8 text-slate-500 font-mono-custom text-[10px] leading-relaxed space-y-3">
         <p>
-          <strong>RISK WARNING & DISCLAIMER:</strong> Trading foreign exchange (Forex), commodities (such as Gold/XAUUSD), and Contracts for Difference (CFDs) carries a high level of risk and may not be suitable for all investors. Leverage creates additional risk and loss exposure. Before deciding to trade, carefully consider your investment objectives, level of experience, and risk appetite. You could sustain a loss of some or all of your initial investment; therefore, do not invest money that you cannot afford to lose.
+          <strong>RISK WARNING & DISCLAIMER:</strong> Trading foreign exchange (Forex), commodities (such as Gold/XAUUSD), and Contracts for Difference (CFDs) carries a high level of risk and may not be suitable for all investors. Leverage creates additional risk and loss exposure.
         </p>
         <p>
-          Data-Based FX (databasedfx.com) provides educational market analysis, statistical research models, and community discussion. We do not operate as registered investment advisors or financial brokers. None of the content, signal previews, or calculator metrics constitute direct financial advice.
+          Data-Based FX (databasedfx.com) provides educational market analysis, statistical research models, and community discussion. We do not operate as registered investment advisors or financial brokers.
         </p>
         <div class="flex justify-between items-center pt-4 text-slate-600">
           <span>&copy; 2026 Data-Based FX (databasedfx.com). All rights reserved.</span>
           <span>Built for Systematic Traders</span>
         </div>
       </div>
-
     </div>
   </footer>
 
   <script>
-    // Funnel Modal Controls
+    let currentStep = 1;
+    let selectedAnswers = {};
+    let amountPauseTimer = null;
+    let autoSubmitTimer = null;
+    let q4Closed = false;
+
     function openFunnelModal() {
       document.getElementById('funnelModal').classList.remove('hidden');
     }
+
     function closeFunnelModal() {
       document.getElementById('funnelModal').classList.add('hidden');
+      if (autoSubmitTimer) clearTimeout(autoSubmitTimer);
     }
+
+    // Questions 1, 2, 3: Immediately Collapse and Lock Selected Step
+    function selectOption(qNum, value, el) {
+      if (qNum > currentStep) {
+        alert(`Please complete Question ${currentStep} first before proceeding.`);
+        const targetBlock = document.getElementById(`qBlock-${currentStep}`);
+        if (targetBlock) {
+          targetBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+
+      selectedAnswers[`q${qNum}`] = value;
+
+      const optionsContainer = document.getElementById(`qOptions-${qNum}`);
+      const cards = optionsContainer.querySelectorAll('.option-card');
+      cards.forEach(card => card.classList.remove('selected'));
+      el.classList.add('selected');
+
+      const currentBadge = document.getElementById(`qBadge-${qNum}`);
+      if (currentBadge) {
+        currentBadge.innerText = 'Completed ✓';
+        currentBadge.className = 'text-[9px] font-mono-custom px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/30';
+      }
+
+      // Collapse option card container immediately
+      optionsContainer.classList.add('hidden');
+
+      if (qNum === currentStep && currentStep < 4) {
+        currentStep++;
+        const nextBlock = document.getElementById(`qBlock-${currentStep}`);
+        const nextOptions = document.getElementById(`qOptions-${currentStep}`);
+        const nextBadge = document.getElementById(`qBadge-${currentStep}`);
+
+        if (nextBlock && nextOptions) {
+          nextBlock.classList.remove('opacity-50', 'bg-[#080D1A]/20');
+          nextBlock.classList.add('bg-[#080D1A]/60', 'border-slate-700');
+          nextOptions.classList.remove('hidden');
+
+          if (nextBadge) {
+            nextBadge.innerText = 'Active';
+            nextBadge.className = 'text-[9px] font-mono-custom px-2 py-0.5 rounded bg-cyan-950 text-[#00F2FE] border border-[#00F2FE]/30';
+          }
+          nextBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }
+
+    // Question 4 Selection & Flashing Input
+    function selectOption4(el, value) {
+      selectedAnswers['q4'] = value;
+      const optionsContainer = document.getElementById('qOptions-4');
+      const cards = optionsContainer.querySelectorAll('.option-card');
+      cards.forEach(card => card.classList.remove('selected'));
+      el.classList.add('selected');
+
+      const amountInput = document.getElementById('funnelAmountInput');
+      amountInput.classList.add('animate-flash');
+      amountInput.focus();
+    }
+
+    // Handle 4-Second Typing Pause in Question 4 Amount Input
+    function handleAmountTyping(input) {
+      const cleanVal = input.value.replace(/[^0-9]/g, '');
+      input.value = cleanVal;
+      input.classList.remove('animate-flash');
+
+      const num = parseInt(cleanVal, 10);
+      const isValid = !isNaN(num) && num >= 300 && num <= 20000;
+      const errorEl = document.getElementById('amountError');
+
+      if (!isValid && cleanVal.length > 0) {
+        errorEl.classList.remove('hidden');
+      } else {
+        errorEl.classList.add('hidden');
+      }
+
+      if (amountPauseTimer) clearTimeout(amountPauseTimer);
+
+      if (isValid) {
+        amountPauseTimer = setTimeout(() => {
+          unlockQuestion5();
+        }, 4000);
+      }
+    }
+
+    function unlockQuestion5() {
+      if (currentStep < 5) {
+        currentStep = 5;
+        const q5Block = document.getElementById('qBlock-5');
+        const q5Options = document.getElementById('qOptions-5');
+        const q5Badge = document.getElementById('qBadge-5');
+
+        q5Block.classList.remove('opacity-50', 'bg-[#080D1A]/20');
+        q5Block.classList.add('bg-[#080D1A]/60', 'border-slate-700');
+        q5Options.classList.remove('hidden');
+
+        if (q5Badge) {
+          q5Badge.innerText = 'Unlocked';
+          q5Badge.className = 'text-[9px] font-mono-custom px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-500/30';
+        }
+        q5Block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    // Auto-Collapse Question 4 When User Focuses/Types in Question 5
+    function onQuestion5Focus() {
+      if (!q4Closed && selectedAnswers['q4'] && validateAmountInput(document.getElementById('funnelAmountInput'))) {
+        q4Closed = true;
+        document.getElementById('qOptions-4').classList.add('hidden');
+
+        const q4Badge = document.getElementById('qBadge-4');
+        if (q4Badge) {
+          q4Badge.innerText = 'Completed ✓';
+          q4Badge.className = 'text-[9px] font-mono-custom px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/30';
+        }
+      }
+    }
+
+    function validateAmountInput(input) {
+      const cleanVal = input.value.replace(/[^0-9]/g, '');
+      const num = parseInt(cleanVal, 10);
+      return !isNaN(num) && num >= 300 && num <= 20000;
+    }
+
+    // Phone Input Auto + Prefix & Non-digit Filter
+    function handlePhoneInput(input) {
+      const errorEl = document.getElementById('phoneError');
+      let val = input.value;
+
+      if (!val.startsWith('+')) {
+        val = '+' + val.replace(/[^0-9]/g, '');
+      } else {
+        val = '+' + val.substring(1).replace(/[^0-9]/g, '');
+      }
+
+      if (input.value !== val) {
+        errorEl.classList.remove('hidden');
+      } else {
+        errorEl.classList.add('hidden');
+      }
+      input.value = val;
+      checkFormActivity();
+    }
+
+    // Email Domain Validation
+    function validateEmailInput(input) {
+      const errorEl = document.getElementById('emailError');
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(input.value)) {
+        errorEl.classList.remove('hidden');
+        return false;
+      } else {
+        errorEl.classList.add('hidden');
+        checkFormActivity();
+        return true;
+      }
+    }
+
+    // 2-Minute Inactivity Auto-Submit Tracker
+    function checkFormActivity() {
+      const name = document.getElementById('funnelName').value.trim();
+      const phone = document.getElementById('funnelPhone').value.trim();
+      const email = document.getElementById('funnelEmail').value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (name && phone.length >= 8 && emailRegex.test(email)) {
+        if (!autoSubmitTimer) {
+          autoSubmitTimer = setTimeout(() => {
+            document.getElementById('funnelForm').requestSubmit();
+          }, 120000); // 2 Minutes = 120,000 ms
+        }
+      }
+    }
+
     function handleFormSubmit(e) {
       e.preventDefault();
-      alert('Application submitted successfully! Our team will review your profile and reach out via Telegram/Phone.');
+      
+      if (!selectedAnswers.q1 || !selectedAnswers.q2 || !selectedAnswers.q3 || !selectedAnswers.q4) {
+        alert('Please complete all questionnaire steps before submitting.');
+        return;
+      }
+
+      const amountInput = document.getElementById('funnelAmountInput');
+      if (!validateAmountInput(amountInput)) {
+        alert('Please provide a valid investment dollar amount between $300 and $20,000.');
+        amountInput.focus();
+        return;
+      }
+
+      const phoneInput = document.getElementById('funnelPhone');
+      if (phoneInput.value.length < 8) {
+        alert('Please enter a complete WhatsApp number including your country code (e.g. +254...).');
+        phoneInput.focus();
+        return;
+      }
+
+      const emailInput = document.getElementById('funnelEmail');
+      if (!validateEmailInput(emailInput)) {
+        alert('Please enter a valid email address with a domain (e.g., name@domain.com).');
+        emailInput.focus();
+        return;
+      }
+
+      const name = document.getElementById('funnelName').value;
+      const phone = phoneInput.value;
+
+      alert(`Thank you, ${name}! Your qualification application has been received. Our team will reach out directly via WhatsApp at ${phone}.`);
       closeFunnelModal();
     }
 
-    // FAQ Accordion Toggle Logic
+    // FAQ Accordion Toggle
     function toggleFAQ(num) {
       const content = document.getElementById(`faqContent${num}`);
       const icon = document.getElementById(`faqIcon${num}`);
@@ -692,15 +1147,12 @@
       let units = 0;
 
       if (instrument === 'EURUSD' || instrument === 'GBPUSD') {
-        // Standard Forex ($10 per pip per lot)
         lotSize = monetaryRisk / (slPips * 10);
         units = lotSize * 100000;
       } else if (instrument === 'XAUUSD') {
-        // Gold ($10 per pip/dollar per lot)
         lotSize = monetaryRisk / (slPips * 10);
         units = lotSize * 100;
       } else if (instrument === 'NAS100') {
-        // Indices ($1 per point per lot)
         lotSize = monetaryRisk / slPips;
         units = lotSize * 10;
       }
@@ -710,7 +1162,6 @@
       document.getElementById('outputUnits').innerText = `${Math.round(units).toLocaleString()}`;
     }
 
-    // Initial calculation on page load
     window.onload = calculateLotSize;
   </script>
 </body>
