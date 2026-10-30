@@ -3,7 +3,7 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
-  // Enable CORS headers if submitted from your custom domain
+  // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -25,8 +25,8 @@ export default async function handler(req, res) {
     const data = req.body;
 
     // Send email via Resend
-    // Note: If using testing domain 'onboarding@resend.dev', Resend requires the recipient 
-    // to match your Resend account email (kevinodipo25@gmail.com).
+    // NOTE: Free Resend accounts using 'onboarding@resend.dev' can only send to 
+    // the registered account owner (kevinodipo25@gmail.com).
     const emailResult = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: ['kevinodipo25@gmail.com'],
@@ -65,3 +65,37 @@ export default async function handler(req, res) {
             </tr>
             <tr style="border-bottom: 1px solid #222;">
               <td style="padding: 10px 4px; font-weight: bold; color: #94a3b8;">5. Biggest Struggle:</td>
+              <td style="padding: 10px 4px; color: #fff;">${data.step5}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #222;">
+              <td style="padding: 10px 4px; font-weight: bold; color: #94a3b8;">6. Trading Capital:</td>
+              <td style="padding: 10px 4px; color: #fff;">${data.step6}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #222;">
+              <td style="padding: 10px 4px; font-weight: bold; color: #94a3b8;">7. Mentorship Choice:</td>
+              <td style="padding: 10px 4px; color: #fff;">${data.step7}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #222;">
+              <td style="padding: 10px 4px; font-weight: bold; color: #94a3b8;">7b. Specific Amount (USD):</td>
+              <td style="padding: 10px 4px; color: #00F2FE; font-weight: bold; font-size: 15px;">${data.specificAmount}</td>
+            </tr>
+          </table>
+
+          <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #333; text-align: center; font-size: 11px; color: #64748b;">
+            Data-Based FX Systematic Lead System • ${new Date().toLocaleString()}
+          </div>
+        </div>
+      `
+    });
+
+    if (emailResult.error) {
+      console.error('Resend Error:', emailResult.error);
+      return res.status(400).json({ success: false, error: emailResult.error.message });
+    }
+
+    return res.status(200).json({ success: true, id: emailResult.data?.id });
+  } catch (error) {
+    console.error('Server Error:', error);
+    return res.status(500).json({ success: false, error: error.message });
+  }
+}
