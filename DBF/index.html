@@ -1414,7 +1414,7 @@
       formData.append('7. Investment Range', selectedAnswers.step7 || 'N/A');
       formData.append('7b. Specific USD Amount', amtInput ? amtInput.value : 'N/A');
 
-      // Send to both emails directly
+      // Send to both emails directly using FormSubmit
       fetch('https://formsubmit.co/ajax/kevinodipo25@gmail.com', {
         method: 'POST',
         body: formData
