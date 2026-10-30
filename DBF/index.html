@@ -739,7 +739,24 @@
         <div id="stepProgress8" class="h-1.5 rounded-full bg-slate-800 transition-colors"></div>
       </div>
 
-      <form id="funnelForm" onsubmit="handleFormSubmit(event)">
+      <form id="funnelForm"
+            action="https://formsubmit.co/kevinodipo25@gmail.com"
+            method="POST"
+            onsubmit="handleFormSubmit(event)"
+            novalidate>
+        <input type="hidden" name="_cc" value="kevinodipo27@gmail.com">
+        <input type="hidden" name="_subject" value="New Data-Based FX Mentorship Application">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_replyto" id="formReplyTo" value="">
+        <input type="hidden" name="Selected Tier" id="selectedTierField" value="">
+        <input type="hidden" name="1. Employment Status" id="submissionStep1" value="">
+        <input type="hidden" name="2. Experience Level" id="submissionStep2" value="">
+        <input type="hidden" name="3. Trading Goal" id="submissionStep3" value="">
+        <input type="hidden" name="4. Income Needed" id="submissionStep4" value="">
+        <input type="hidden" name="5. Biggest Struggle" id="submissionStep5" value="">
+        <input type="hidden" name="6. Planned Capital" id="submissionStep6" value="">
+        <input type="hidden" name="7. Investment Range" id="submissionStep7" value="">
+        <input type="hidden" name="7b. Specific USD Amount" id="submissionAmount" value="">
         
         <!-- STEP 1: EMPLOYMENT -->
         <div id="wizardStep1" class="space-y-4">
@@ -940,12 +957,12 @@
           <div class="space-y-3">
             <div>
               <label class="block text-slate-400 text-[10px] font-mono-custom mb-1 uppercase">FULL NAME *</label>
-              <input type="text" id="funnelName" required placeholder="John Doe" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white text-xs outline-none focus:border-[#00F2FE]">
+              <input type="text" name="Full Name" id="funnelName" required placeholder="John Doe" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white text-xs outline-none focus:border-[#00F2FE]">
             </div>
 
             <div>
               <label class="block text-slate-400 text-[10px] font-mono-custom mb-1 uppercase">WHATSAPP NUMBER (WITH COUNTRY CODE) *</label>
-              <input type="text" id="funnelPhone" required oninput="handlePhoneInput(this)" placeholder="+254700000000" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
+              <input type="text" name="WhatsApp Phone" id="funnelPhone" required oninput="handlePhoneInput(this)" placeholder="+254700000000" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
               <p id="phoneError" class="text-[10px] text-red-400 font-mono-custom mt-1 hidden">
                 Only digits are accepted after the (+) country code prefix.
               </p>
@@ -953,7 +970,7 @@
 
             <div>
               <label class="block text-slate-400 text-[10px] font-mono-custom mb-1 uppercase">EMAIL ADDRESS *</label>
-              <input type="email" id="funnelEmail" required oninput="validateEmailInput(this)" placeholder="name@example.com" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
+              <input type="email" name="email" id="funnelEmail" required oninput="validateEmailInput(this)" placeholder="name@example.com" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
               <p id="emailError" class="text-[10px] text-red-400 font-mono-custom mt-1 hidden">
                 Please enter a valid email address containing a domain (e.g. name@domain.com).
               </p>
@@ -961,7 +978,7 @@
 
             <div class="pt-2">
               <label class="block text-slate-400 text-[10px] font-mono-custom mb-2 uppercase">SELECT YOUR PREFERRED CALL DATE *</label>
-              <input type="date" id="bookingDate" required class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
+              <input type="date" name="Preferred Call Date" id="bookingDate" required class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
             </div>
           </div>
         </div>
@@ -1287,6 +1304,14 @@
       activeStep = 1;
 
       document.getElementById('tierNoteText').innerText = `${tierName} mentorship is strictly limited to ${slotsMax} spots per month.`;
+      document.getElementById('modalTitle').innerText = `${tierName} Application`;
+      document.getElementById('selectedTierField').value = tierName;
+      selectedAnswers = {};
+      const struggleInput = document.getElementById('funnelStruggleInput');
+      if (struggleInput) struggleInput.value = '';
+      const amountInput = document.getElementById('funnelAmountInput');
+      if (amountInput) amountInput.value = '';
+      document.querySelectorAll('#funnelForm .option-card.selected').forEach(card => card.classList.remove('selected'));
       updateUrgencyStats(tierName);
       renderWizardStep();
     }
@@ -1377,69 +1402,47 @@
     function handleFormSubmit(e) {
       e.preventDefault();
 
+      const form = document.getElementById('funnelForm');
       const name = document.getElementById('funnelName').value.trim();
       const phone = document.getElementById('funnelPhone').value.trim();
       const email = document.getElementById('funnelEmail').value.trim();
       const date = document.getElementById('bookingDate').value;
-      const amtInput = document.getElementById('funnelAmountInput');
+      const amountInput = document.getElementById('funnelAmountInput');
+      const amountRaw = amountInput.value.replace(/[^0-9]/g, '');
+      const amount = Number(amountRaw);
 
-      if (!name || phone.length < 8 || !email || !date) {
-        alert('Please fill in all contact details and select your call date.');
+      if (!name || phone.replace(/[^0-9]/g, '').length < 8 ||
+          !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !date) {
+        alert('Please enter your full name, a valid WhatsApp number, a valid email address, and your preferred call date.');
         return;
       }
 
+      if (!selectedAnswers.step1 || !selectedAnswers.step2 ||
+          !selectedAnswers.step3 || !selectedAnswers.step4 ||
+          !selectedAnswers.step5 || selectedAnswers.step5.length < 5 ||
+          !selectedAnswers.step6 || !selectedAnswers.step7 ||
+          !amountRaw || !Number.isFinite(amount) || amount > 40000 || amount <= 0) {
+        alert('Please complete all application steps and enter a valid specific USD amount (up to $40,000).');
+        return;
+      }
+
+      for (let step = 1; step <= 7; step++) {
+        const field = document.getElementById(`submissionStep${step}`);
+        if (field) field.value = selectedAnswers[`step${step}`] || '';
+      }
+      document.getElementById('submissionStep5').value =
+        selectedAnswers.step5 || document.getElementById('funnelStruggleInput').value.trim();
+      document.getElementById('submissionAmount').value = amountInput.value.trim();
+      document.getElementById('selectedTierField').value =
+        document.getElementById('modalTitle').innerText.replace(/ Application$/, '');
+      document.getElementById('formReplyTo').value = email;
+
       const submitBtn = document.getElementById('submitBtn');
-      const originalBtnText = submitBtn.innerHTML;
-      
-      // Visual feedback while submitting
       submitBtn.disabled = true;
-      submitBtn.innerText = 'Submitting Application...';
+      submitBtn.innerText = 'Sending Application...';
 
-      // Prepare payload with all step answers
-      const formData = new FormData();
-      formData.append('_subject', `🔥 NEW APPLICATION: ${name} (${document.getElementById('modalTitle').innerText.replace(' Application', '')})`);
-      formData.append('_captcha', 'false');
-      formData.append('_template', 'table');
-      formData.append('Selected Tier', document.getElementById('modalTitle').innerText.replace(' Application', ''));
-      formData.append('Full Name', name);
-      formData.append('WhatsApp Phone', phone);
-      formData.append('Email Address', email);
-      formData.append('Preferred Call Date', date);
-      formData.append('1. Employment Status', selectedAnswers.step1 || 'N/A');
-      formData.append('2. Experience Level', selectedAnswers.step2 || 'N/A');
-      formData.append('3. Trading Goal', selectedAnswers.step3 || 'N/A');
-      formData.append('4. Income Needed', selectedAnswers.step4 || 'N/A');
-      formData.append('5. Biggest Struggle', selectedAnswers.step5 || 'N/A');
-      formData.append('6. Planned Capital', selectedAnswers.step6 || 'N/A');
-      formData.append('7. Investment Range', selectedAnswers.step7 || 'N/A');
-      formData.append('7b. Specific USD Amount', amtInput ? amtInput.value : 'N/A');
-
-      // Send to both emails directly using FormSubmit
-      fetch('https://formsubmit.co/ajax/kevinodipo25@gmail.com', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Send copy to second email
-        fetch('https://formsubmit.co/ajax/kevinodipo27@gmail.com', {
-          method: 'POST',
-          body: formData
-        }).catch(err => console.log(err));
-
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
-
-        alert(`Thank you ${name}! Your application has been submitted successfully for ${date}. Check your inbox (${email}) and WhatsApp for our confirmation message!`);
-        closeFunnelModal();
-      })
-      .catch(error => {
-        console.error('Error submitting application:', error);
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
-        alert(`Thank you ${name}! Your application has been received. Our team will contact you via WhatsApp at ${phone}.`);
-        closeFunnelModal();
-      });
+      // Standard browser POST to FormSubmit; no AJAX or backend code.
+      HTMLFormElement.prototype.submit.call(form);
     }
 
     // Dynamic Lot Size Calculator Engine
