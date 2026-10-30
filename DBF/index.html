@@ -1381,14 +1381,65 @@
       const phone = document.getElementById('funnelPhone').value.trim();
       const email = document.getElementById('funnelEmail').value.trim();
       const date = document.getElementById('bookingDate').value;
+      const amtInput = document.getElementById('funnelAmountInput');
 
       if (!name || phone.length < 8 || !email || !date) {
         alert('Please fill in all contact details and select your call date.');
         return;
       }
 
-      alert(`Thank you ${name}! Your game plan session has been booked for ${date}. Our head coaching team will reach out via WhatsApp at ${phone}.`);
-      closeFunnelModal();
+      const submitBtn = document.getElementById('submitBtn');
+      const originalBtnText = submitBtn.innerHTML;
+      
+      // Visual feedback while submitting
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Submitting Application...';
+
+      // Prepare payload with all step answers
+      const formData = new FormData();
+      formData.append('_subject', `🔥 NEW APPLICATION: ${name} (${document.getElementById('modalTitle').innerText.replace(' Application', '')})`);
+      formData.append('_captcha', 'false');
+      formData.append('_template', 'table');
+      formData.append('Selected Tier', document.getElementById('modalTitle').innerText.replace(' Application', ''));
+      formData.append('Full Name', name);
+      formData.append('WhatsApp Phone', phone);
+      formData.append('Email Address', email);
+      formData.append('Preferred Call Date', date);
+      formData.append('1. Employment Status', selectedAnswers.step1 || 'N/A');
+      formData.append('2. Experience Level', selectedAnswers.step2 || 'N/A');
+      formData.append('3. Trading Goal', selectedAnswers.step3 || 'N/A');
+      formData.append('4. Income Needed', selectedAnswers.step4 || 'N/A');
+      formData.append('5. Biggest Struggle', selectedAnswers.step5 || 'N/A');
+      formData.append('6. Planned Capital', selectedAnswers.step6 || 'N/A');
+      formData.append('7. Investment Range', selectedAnswers.step7 || 'N/A');
+      formData.append('7b. Specific USD Amount', amtInput ? amtInput.value : 'N/A');
+
+      // Send to both emails directly
+      fetch('https://formsubmit.co/ajax/kevinodipo25@gmail.com', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Send copy to second email
+        fetch('https://formsubmit.co/ajax/kevinodipo27@gmail.com', {
+          method: 'POST',
+          body: formData
+        }).catch(err => console.log(err));
+
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+
+        alert(`Thank you ${name}! Your application has been submitted successfully for ${date}. Check your inbox (${email}) and WhatsApp for our confirmation message!`);
+        closeFunnelModal();
+      })
+      .catch(error => {
+        console.error('Error submitting application:', error);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+        alert(`Thank you ${name}! Your application has been received. Our team will contact you via WhatsApp at ${phone}.`);
+        closeFunnelModal();
+      });
     }
 
     // Dynamic Lot Size Calculator Engine
