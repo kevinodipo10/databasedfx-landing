@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Data-Based FX | Backtested Trading & Pivot Levels Mentorship</title>
+  <title>Data-Based FX | Backtested Trading & Pivot Points Mentorship</title>
   <link rel="icon" type="image/png" href="logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,11 @@
     }
     @keyframes gold-glow {
       0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.25); }
-      50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
+      50% { shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
+    }
+    @keyframes red-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.4), inset 0 0 15px rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.8); }
+      50% { box-shadow: 0 0 35px rgba(239, 68, 68, 0.8), inset 0 0 25px rgba(239, 68, 68, 0.4); border-color: rgba(255, 99, 99, 1); }
     }
     @keyframes flash-input {
       0%, 100% { border-color: rgba(0, 242, 254, 0.4); box-shadow: 0 0 10px rgba(0, 242, 254, 0.2); }
@@ -32,6 +36,7 @@
 
     .animate-glow { animation: pulse-glow 3.5s infinite ease-in-out; }
     .animate-gold-glow { animation: gold-glow 3.5s infinite ease-in-out; }
+    .animate-red-glow { animation: red-glow 2s infinite ease-in-out; }
     .animate-flash { animation: flash-input 1.2s infinite ease-in-out; }
     
     .glass-card {
@@ -97,8 +102,8 @@
   <header class="fixed top-0 left-0 w-full z-50 glass-card border-b border-slate-900/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       <a href="#" class="flex items-center space-x-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#00A8FF] to-[#00F2FE] flex items-center justify-center font-black text-slate-950 text-sm tracking-wider shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-          DBF
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#00A8FF] to-[#00F2FE] flex items-center justify-center font-black text-slate-950 text-sm tracking-wider shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform overflow-hidden">
+          <img src="logo.png" alt="DBF Logo" class="w-full h-full object-cover">
         </div>
         <div class="flex flex-col">
           <span class="text-lg font-extrabold tracking-wider text-white group-hover:text-[#00F2FE] transition-colors">
@@ -111,10 +116,9 @@
       </a>
 
       <nav class="hidden lg:flex items-center space-x-8 text-xs font-semibold tracking-wide text-slate-300">
-        <a href="#backtested-results" class="hover:text-[#00F2FE] transition-colors">Backtested Results</a>
-        <a href="#breakdowns" class="hover:text-[#00F2FE] transition-colors">Verified Breakdowns</a>
+        <a href="#breakdowns" class="hover:text-[#00F2FE] transition-colors">Verified Trade Breakdowns</a>
         <a href="#calculator" class="hover:text-[#00F2FE] transition-colors">Risk Calculator</a>
-        <a href="#mentors" class="hover:text-[#00F2FE] transition-colors">Mentors</a>
+        <a href="#coaches" class="hover:text-[#00F2FE] transition-colors">Coaches</a>
         <a href="#one-on-one" class="hover:text-amber-400 transition-colors">One-on-One Access</a>
         <a href="#faq" class="hover:text-[#00F2FE] transition-colors">FAQ</a>
       </nav>
@@ -129,82 +133,43 @@
   <section class="relative pt-36 pb-24 overflow-hidden">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-950/30 via-[#05070B] to-[#05070B]"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-      <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full glass-card border border-[#00F2FE]/30 text-[#00F2FE] text-[11px] font-mono-custom mb-8 animate-glow">
+      <div class="inline-flex items-center space-x-2 px-3.5 sm:px-4 py-1.5 rounded-full glass-card border border-[#00F2FE]/30 text-[#00F2FE] text-[10px] sm:text-[11px] font-mono-custom mb-8 animate-glow">
         <span class="w-2 h-2 rounded-full bg-[#00F2FE] animate-pulse"></span>
         <span>INSTITUTIONAL DATA & SYSTEMATIC EXECUTION</span>
       </div>
 
-      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight max-w-5xl mx-auto mb-6">
+      <h1 class="text-3xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight max-w-5xl mx-auto mb-6">
         Precision-Driven Trading Backed by <br class="hidden sm:inline">
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00F2FE] via-cyan-300 to-amber-400">
           Backtested Data
         </span>
       </h1>
 
-      <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+      <p class="text-slate-400 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-normal px-2">
         Eliminate emotional bias across <strong>Forex, Metals (Gold), and Indices</strong>. Access systematic probabilities, automated position sizing tools, and high-confluence 10RR setups.
       </p>
 
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="#one-on-one" class="w-full sm:w-auto px-8 py-4 rounded-xl text-xs font-black uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:shadow-[0_0_35px_rgba(0,242,254,0.6)] hover:scale-105 transition-all duration-300 text-center">
-          Apply Now to Join
-        </a>
-        <a href="#calculator" class="w-full sm:w-auto px-8 py-4 rounded-xl text-xs font-semibold glass-card text-slate-300 hover:text-white hover:border-[#00F2FE]/40 transition-all text-center">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+        <div class="flex flex-col items-center sm:items-start space-y-2.5 w-full sm:w-auto">
+          <a href="#one-on-one" class="w-full sm:w-auto px-8 py-4 rounded-xl text-xs font-black uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:shadow-[0_0_35px_rgba(0,242,254,0.6)] hover:scale-105 transition-all duration-300 text-center">
+            Apply Now to Join
+          </a>
+          <!-- USER PROOF BADGE BELOW BUTTON -->
+          <div class="flex items-center justify-center sm:justify-start space-x-2.5 pt-1 pointer-events-none w-full">
+            <div class="flex -space-x-2 overflow-hidden">
+              <img class="inline-block h-6 w-6 rounded-full ring-2 ring-slate-900 object-cover" src="person 1.jpeg" alt="Trader 1">
+              <img class="inline-block h-6 w-6 rounded-full ring-2 ring-slate-900 object-cover" src="person 2.jpeg" alt="Trader 2">
+              <img class="inline-block h-6 w-6 rounded-full ring-2 ring-slate-900 object-cover" src="person 3.jpeg" alt="Trader 3">
+            </div>
+            <span class="text-[11px] text-slate-400 font-medium tracking-tight">
+              Used by <strong class="text-white font-bold">1,023+</strong> traders worldwide
+            </span>
+          </div>
+        </div>
+
+        <a href="#calculator" class="w-full sm:w-auto px-8 py-4 rounded-xl text-xs font-semibold glass-card text-slate-300 hover:text-white hover:border-[#00F2FE]/40 transition-all text-center self-center sm:self-start">
           Explore Calculator & Analysis &rarr;
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- BACKTESTED RESULTS -->
-  <section id="backtested-results" class="py-20 border-t border-slate-900 bg-slate-950/40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
-        <div>
-          <span class="text-[#00F2FE] text-xs font-mono-custom uppercase tracking-widest">Empirical Backtesting</span>
-          <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Backtested Results</h2>
-        </div>
-        <p class="text-slate-400 text-xs max-w-md mt-4 md:mt-0 leading-relaxed">
-          Historical trade setups and backtest data across all 3 asset classes targeting structured 10RR setups.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-slate-800">
-          <div class="aspect-video bg-[#080D1A] rounded-xl mb-4 flex items-center justify-center border border-slate-800 overflow-hidden relative">
-            <span class="text-slate-500 text-xs font-mono-custom text-center px-4">[ FX Backtest Screenshot Placeholder ]</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-1">Forex Pairs</h3>
-          <p class="text-slate-400 text-xs mb-3">EUR/USD, GBP/USD, USD/JPY Pivot Level Backtests</p>
-          <div class="flex justify-between items-center text-xs border-t border-slate-800/80 pt-3">
-            <span class="text-slate-400">Target Risk-Reward:</span>
-            <span class="text-amber-400 font-bold font-mono-custom">1:10 (10RR)</span>
-          </div>
-        </div>
-
-        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-slate-800">
-          <div class="aspect-video bg-[#080D1A] rounded-xl mb-4 flex items-center justify-center border border-slate-800 overflow-hidden relative">
-            <span class="text-slate-500 text-xs font-mono-custom text-center px-4">[ Metals (Gold/XAUUSD) Screenshot Placeholder ]</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-1">Metals (Gold / XAUUSD)</h3>
-          <p class="text-slate-400 text-xs mb-3">High-Volatility Gold Liquidity Pivot Backtests</p>
-          <div class="flex justify-between items-center text-xs border-t border-slate-800/80 pt-3">
-            <span class="text-slate-400">Target Risk-Reward:</span>
-            <span class="text-amber-400 font-bold font-mono-custom">1:10 (10RR)</span>
-          </div>
-        </div>
-
-        <div class="glass-card glass-card-hover rounded-2xl p-6 border border-slate-800">
-          <div class="aspect-video bg-[#080D1A] rounded-xl mb-4 flex items-center justify-center border border-slate-800 overflow-hidden relative">
-            <span class="text-slate-500 text-xs font-mono-custom text-center px-4">[ Indices (NAS100 / US30) Screenshot Placeholder ]</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-1">Indices</h3>
-          <p class="text-slate-400 text-xs mb-3">US30 & NAS100 Structural Breakout Backtests</p>
-          <div class="flex justify-between items-center text-xs border-t border-slate-800/80 pt-3">
-            <span class="text-slate-400">Target Risk-Reward:</span>
-            <span class="text-amber-400 font-bold font-mono-custom">1:10 (10RR)</span>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -214,52 +179,207 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-3xl mx-auto mb-16">
         <span class="text-[#00F2FE] text-xs font-mono-custom uppercase tracking-widest">Performance Statistics</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Verified Model Breakdowns</h2>
-        <p class="text-slate-400 text-xs mt-2">Statistical outcomes across backtested setups in FX, Metals, and Indices.</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Verified Trade Breakdowns</h2>
+        <p class="text-slate-400 text-xs mt-2">Verified 2026 statistical outcomes across setups in FX, Metals, and Indices.</p>
       </div>
 
-      <div class="flex space-x-6 overflow-x-auto no-scrollbar pb-6">
-        <div class="min-w-[300px] sm:min-w-[350px] glass-card p-6 rounded-2xl border border-slate-800 flex-shrink-0">
-          <div class="h-40 bg-[#080D1A] rounded-lg mb-4 flex items-center justify-center border border-slate-800">
-            <span class="text-slate-600 text-xs font-mono-custom">[ Major FX Backtest Chart ]</span>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- FOREX PAIRS CAROUSEL CARD -->
+        <div class="glass-card p-6 rounded-3xl border border-slate-800 flex flex-col justify-between glass-card-hover relative overflow-hidden group">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <span class="px-3 py-1 rounded-full bg-cyan-950/80 border border-[#00F2FE]/30 text-[#00F2FE] text-[10px] font-mono-custom uppercase tracking-wider">
+                FOREX PAIRS
+              </span>
+              <span id="forexCounter" class="text-[10px] font-mono-custom text-slate-400">
+                1 / 6
+              </span>
+            </div>
+
+            <!-- SLIDING SCREENSHOT CONTAINER -->
+            <div class="relative aspect-video rounded-2xl overflow-hidden border border-slate-800 bg-[#040812] cursor-pointer group-hover:border-[#00F2FE]/50 transition-all shadow-inner" onclick="openLightbox('forex')">
+              <img id="forexImage" src="forex-eurusd.png" alt="Forex Backtest" class="w-full h-full object-cover transition-all duration-500 ease-in-out hover:scale-105">
+              
+              <!-- Zoom Overlay Hint -->
+              <div class="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity">
+                <span class="px-3 py-1.5 rounded-lg bg-black/80 border border-white/20 text-white text-[10px] font-mono-custom flex items-center space-x-1.5 shadow-xl">
+                  <svg class="w-3.5 h-3.5 fill-current text-[#00F2FE]" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                  <span>Click to Expand View</span>
+                </span>
+              </div>
+
+              <!-- Navigation Arrow Controls -->
+              <button onclick="event.stopPropagation(); slideCategory('forex', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-slate-900/80 border border-slate-700 text-white flex items-center justify-center hover:bg-[#00F2FE] hover:text-black transition-colors">
+                &#10094;
+              </button>
+              <button onclick="event.stopPropagation(); slideCategory('forex', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-slate-900/80 border border-slate-700 text-white flex items-center justify-center hover:bg-[#00F2FE] hover:text-black transition-colors">
+                &#10095;
+              </button>
+            </div>
+
+            <div class="mt-4">
+              <h4 id="forexTitle" class="text-base font-extrabold text-white">EURUSD Backtest Data</h4>
+              <p class="text-[11px] text-slate-400 mt-0.5">2026 Quantitative Strategy Execution</p>
+            </div>
           </div>
-          <h4 class="text-lg font-bold text-white">Major FX Pairs</h4>
-          <p class="text-xs text-slate-400 mb-4">EURUSD, GBPUSD, AUDUSD</p>
-          <div class="space-y-2 text-xs border-t border-slate-800/80 pt-3 font-mono-custom">
-            <div class="flex justify-between"><span class="text-slate-400">Win Rate:</span><span class="text-teal-400 font-bold">68.4%</span></div>
-            <div class="flex justify-between"><span class="text-slate-400">Average RR:</span><span class="text-amber-400 font-bold">10RR</span></div>
-            <div class="flex justify-between"><span class="text-slate-400">Breakeven (BE):</span><span class="text-[#00F2FE] font-bold">12.1%</span></div>
+
+          <div class="space-y-2 text-xs border-t border-slate-800/80 pt-4 mt-4 font-mono-custom">
+            <div class="flex justify-between">
+              <span class="text-slate-400">Win Rate:</span>
+              <span id="forexWinRate" class="text-teal-400 font-bold">64.3%</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Average RR:</span>
+              <span id="forexRR" class="text-amber-400 font-bold">10RR</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Breakeven (BE):</span>
+              <span id="forexBE" class="text-[#00F2FE] font-bold">6.7%</span>
+            </div>
           </div>
         </div>
 
-        <div class="min-w-[300px] sm:min-w-[350px] glass-card p-6 rounded-2xl border border-slate-800 flex-shrink-0">
-          <div class="h-40 bg-[#080D1A] rounded-lg mb-4 flex items-center justify-center border border-slate-800">
-            <span class="text-slate-600 text-xs font-mono-custom">[ Gold (XAUUSD) Backtest Chart ]</span>
+        <!-- METALS (GOLD & SILVER) CAROUSEL CARD -->
+        <div class="glass-card p-6 rounded-3xl border border-slate-800 flex flex-col justify-between glass-card-hover relative overflow-hidden group">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <span class="px-3 py-1 rounded-full bg-amber-950/80 border border-amber-500/30 text-amber-400 text-[10px] font-mono-custom uppercase tracking-wider">
+                METALS (XAU / XAG)
+              </span>
+              <span id="metalsCounter" class="text-[10px] font-mono-custom text-slate-400">
+                1 / 2
+              </span>
+            </div>
+
+            <!-- SLIDING SCREENSHOT CONTAINER -->
+            <div class="relative aspect-video rounded-2xl overflow-hidden border border-slate-800 bg-[#040812] cursor-pointer group-hover:border-amber-400/50 transition-all shadow-inner" onclick="openLightbox('metals')">
+              <img id="metalsImage" src="metals -gold.png" alt="Metals Backtest" class="w-full h-full object-cover transition-all duration-500 ease-in-out hover:scale-105">
+              
+              <!-- Zoom Overlay Hint -->
+              <div class="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity">
+                <span class="px-3 py-1.5 rounded-lg bg-black/80 border border-white/20 text-white text-[10px] font-mono-custom flex items-center space-x-1.5 shadow-xl">
+                  <svg class="w-3.5 h-3.5 fill-current text-amber-400" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                  <span>Click to Expand View</span>
+                </span>
+              </div>
+
+              <!-- Navigation Arrow Controls -->
+              <button onclick="event.stopPropagation(); slideCategory('metals', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-slate-900/80 border border-slate-700 text-white flex items-center justify-center hover:bg-amber-400 hover:text-black transition-colors">
+                &#10094;
+              </button>
+              <button onclick="event.stopPropagation(); slideCategory('metals', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-slate-900/80 border border-slate-700 text-white flex items-center justify-center hover:bg-amber-400 hover:text-black transition-colors">
+                &#10095;
+              </button>
+            </div>
+
+            <div class="mt-4">
+              <h4 id="metalsTitle" class="text-base font-extrabold text-white">XAU/USD Gold Performance</h4>
+              <p class="text-[11px] text-slate-400 mt-0.5">High-Volatility Gold Liquidity Pivot Backtests</p>
+            </div>
           </div>
-          <h4 class="text-lg font-bold text-white">Metals (XAU/USD)</h4>
-          <p class="text-xs text-slate-400 mb-4">Gold Spot / Dollar</p>
-          <div class="space-y-2 text-xs border-t border-slate-800/80 pt-3 font-mono-custom">
-            <div class="flex justify-between"><span class="text-slate-400">Win Rate:</span><span class="text-teal-400 font-bold">64.2%</span></div>
-            <div class="flex justify-between"><span class="text-slate-400">Average RR:</span><span class="text-amber-400 font-bold">10RR</span></div>
-            <div class="flex justify-between"><span class="text-slate-400">Breakeven (BE):</span><span class="text-[#00F2FE] font-bold">14.5%</span></div>
+
+          <div class="space-y-2 text-xs border-t border-slate-800/80 pt-4 mt-4 font-mono-custom">
+            <div class="flex justify-between">
+              <span class="text-slate-400">Win Rate:</span>
+              <span id="metalsWinRate" class="text-teal-400 font-bold">63.6%</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Average RR:</span>
+              <span id="metalsRR" class="text-amber-400 font-bold">10RR</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Breakeven (BE):</span>
+              <span id="metalsBE" class="text-[#00F2FE] font-bold">0.0%</span>
+            </div>
           </div>
         </div>
 
-        <div class="min-w-[300px] sm:min-w-[350px] glass-card p-6 rounded-2xl border border-slate-800 flex-shrink-0">
-          <div class="h-40 bg-[#080D1A] rounded-lg mb-4 flex items-center justify-center border border-slate-800">
-            <span class="text-slate-600 text-xs font-mono-custom">[ Indices Backtest Chart ]</span>
+        <!-- INDICES CAROUSEL CARD -->
+        <div class="glass-card p-6 rounded-3xl border border-slate-800 flex flex-col justify-between glass-card-hover relative overflow-hidden group">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <span class="px-3 py-1 rounded-full bg-purple-950/80 border border-purple-500/30 text-purple-400 text-[10px] font-mono-custom uppercase tracking-wider">
+                INDICES
+              </span>
+              <span id="indicesCounter" class="text-[10px] font-mono-custom text-slate-400">
+                1 / 3
+              </span>
+            </div>
+
+            <!-- SLIDING SCREENSHOT CONTAINER -->
+            <div class="relative aspect-video rounded-2xl overflow-hidden border border-slate-800 bg-[#040812] cursor-pointer group-hover:border-purple-500/50 transition-all shadow-inner" onclick="openLightbox('indices')">
+              <img id="indicesImage" src="indices-nas100.png" alt="Indices Backtest" class="w-full h-full object-cover transition-all duration-500 ease-in-out hover:scale-105">
+              
+              <!-- Zoom Overlay Hint -->
+              <div class="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity">
+                <span class="px-3 py-1.5 rounded-lg bg-black/80 border border-white/20 text-white text-[10px] font-mono-custom flex items-center space-x-1.5 shadow-xl">
+                  <svg class="w-3.5 h-3.5 fill-current text-purple-400" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                  <span>Click to Expand View</span>
+                </span>
+              </div>
+
+              <!-- Navigation Arrow Controls -->
+              <button onclick="event.stopPropagation(); slideCategory('indices', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-slate-900/80 border border-slate-700 text-white flex items-center justify-center hover:bg-purple-500 hover:text-white transition-colors">
+                &#10094;
+              </button>
+              <button onclick="event.stopPropagation(); slideCategory('indices', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-slate-900/80 border border-slate-700 text-white flex items-center justify-center hover:bg-purple-500 hover:text-white transition-colors">
+                &#10095;
+              </button>
+            </div>
+
+            <div class="mt-4">
+              <h4 id="indicesTitle" class="text-base font-extrabold text-white">NAS100 Index Backtest</h4>
+              <p class="text-[11px] text-slate-400 mt-0.5">Structural Breakout & Liquidity Sweep Data</p>
+            </div>
           </div>
-          <h4 class="text-lg font-bold text-white">Indices</h4>
-          <p class="text-xs text-slate-400 mb-4">NAS100, US30, GER40</p>
-          <div class="space-y-2 text-xs border-t border-slate-800/80 pt-3 font-mono-custom">
-            <div class="flex justify-between"><span class="text-slate-400">Win Rate:</span><span class="text-teal-400 font-bold">71.0%</span></div>
-            <div class="flex justify-between"><span class="text-slate-400">Average RR:</span><span class="text-amber-400 font-bold">10RR</span></div>
-            <div class="flex justify-between"><span class="text-slate-400">Breakeven (BE):</span><span class="text-[#00F2FE] font-bold">9.8%</span></div>
+
+          <div class="space-y-2 text-xs border-t border-slate-800/80 pt-4 mt-4 font-mono-custom">
+            <div class="flex justify-between">
+              <span class="text-slate-400">Win Rate:</span>
+              <span id="indicesWinRate" class="text-teal-400 font-bold">55.6%</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Average RR:</span>
+              <span id="indicesRR" class="text-amber-400 font-bold">10RR</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-400">Breakeven (BE):</span>
+              <span id="indicesBE" class="text-[#00F2FE] font-bold">10.0%</span>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
+
+  <!-- FULL-SCREEN LIGHTBOX MODAL FOR BREAKDOWNS -->
+  <div id="breakdownLightbox" class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4">
+    <button onclick="closeLightbox()" class="absolute top-6 right-6 text-slate-400 hover:text-white font-black text-3xl z-10 transition-colors">&times;</button>
+    
+    <div class="max-w-6xl w-full flex flex-col items-center">
+      <div class="relative w-full max-h-[80vh] flex items-center justify-center overflow-hidden rounded-2xl border border-slate-800 bg-[#02050A]">
+        <img id="lightboxImage" src="" alt="Full Breakdown View" class="max-w-full max-h-[78vh] object-contain transition-all duration-300">
+        
+        <button onclick="slideLightbox(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-slate-900/90 border border-slate-700 text-white text-xl flex items-center justify-center hover:bg-[#00F2FE] hover:text-black transition-all shadow-2xl">
+          &#10094;
+        </button>
+        <button onclick="slideLightbox(1)" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-slate-900/90 border border-slate-700 text-white text-xl flex items-center justify-center hover:bg-[#00F2FE] hover:text-black transition-all shadow-2xl">
+          &#10095;
+        </button>
+      </div>
+
+      <div class="mt-4 text-center">
+        <h3 id="lightboxTitle" class="text-lg font-extrabold text-white"></h3>
+        <div class="flex space-x-6 text-xs font-mono-custom text-slate-300 mt-2">
+          <span>Win Rate: <strong id="lightboxWinRate" class="text-teal-400"></strong></span>
+          <span>Avg RR: <strong id="lightboxRR" class="text-amber-400"></strong></span>
+          <span>Breakeven: <strong id="lightboxBE" class="text-[#00F2FE]"></strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- INTERACTIVE RISK CALCULATOR -->
   <section id="calculator" class="py-24 border-t border-slate-900 bg-[#05070B]">
@@ -351,59 +471,30 @@
     </div>
   </section>
 
-  <!-- MENTORS SECTION -->
-  <section id="mentors" class="py-24 border-t border-slate-900 bg-slate-950/60">
+  <!-- MEET YOUR COACHES SECTION -->
+  <section id="coaches" class="py-24 border-t border-slate-900 bg-slate-950/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-3xl mx-auto mb-16">
         <span class="text-[#00F2FE] text-xs font-mono-custom uppercase tracking-widest">Leadership & Mentorship</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Meet Your Mentors</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Meet Your Coaches</h2>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+      <div class="max-w-4xl mx-auto mb-16">
         <div class="glass-card rounded-3xl p-8 border border-slate-800 relative">
           <div class="flex flex-col sm:flex-row items-center space-y-6 sm:space-y-0 sm:space-x-6 mb-6">
             <img src="odipo.jpeg" alt="Odipo the Trader" class="w-32 h-32 rounded-2xl object-cover border-2 border-[#00F2FE] shadow-lg shadow-cyan-500/20">
             <div>
               <h3 class="text-2xl font-bold text-white">Odipo the Trader</h3>
-              <p class="text-[#00F2FE] text-xs font-mono-custom font-medium mt-0.5">Head Trader & Mentor</p>
+              <p class="text-[#00F2FE] text-xs font-mono-custom font-medium mt-0.5">Head Coach & Mentor</p>
               <p class="text-slate-400 text-xs mt-1">Trading Financial Markets Since 2022</p>
             </div>
           </div>
           <p class="text-slate-300 text-xs leading-relaxed mb-4">
-            Instead of jumping between dozens of conflicting strategies, Odipo trades <strong>one data-proven approach: Pivot Levels</strong>.
+            Instead of jumping between dozens of conflicting strategies, Odipo serves as Head Coach alongside multiple experienced coaches under Odipo the Trader, all executing <strong>one data-proven approach: Pivot Points</strong>.
           </p>
           <p class="text-slate-400 text-xs leading-relaxed">
-            This unique price action framework was developed by combining years of coaching experience across Price Action, Smart Money Concepts (SMC), ICT, Volume Profile, Order Flow, Fibonacci, and MSnR. Having coached <strong>over 1,000+ forex mentees</strong>, Odipo teaches a streamlined rule-set engineered for consistency.
+            Mentees have access to multiple dedicated coaches in addition to qualified mentees of Odipo the Trader and his fellow coaches, all trading the exact strategy called "Pivot Points". This unique price action framework was developed by combining years of coaching experience across Price Action, Smart Money Concepts (SMC), ICT, Volume Profile, Order Flow, Fibonacci, and MSnR. Having coached <strong>over 1,000+ forex mentees</strong>, Odipo and his coaching team teach a streamlined rule-set engineered for consistency.
           </p>
-        </div>
-
-        <div class="glass-card rounded-3xl p-8 border border-slate-800 relative">
-          <div class="flex flex-col sm:flex-row items-center space-y-6 sm:space-y-0 sm:space-x-6 mb-6">
-            <img src="ali.jpeg" alt="Presenter Ali" class="w-32 h-32 rounded-2xl object-cover border-2 border-amber-400 shadow-lg shadow-amber-500/20">
-            <div>
-              <h3 class="text-2xl font-bold text-white">Presenter Ali</h3>
-              <p class="text-amber-400 text-xs font-mono-custom font-medium mt-0.5">Business Partner & Podcast Host</p>
-              <p class="text-slate-400 text-xs mt-1">Africa's Largest Forex Podcast (500K+ Subs)</p>
-            </div>
-          </div>
-          <p class="text-slate-300 text-xs leading-relaxed mb-4">
-            Presenter Ali operates the biggest Forex Podcast platform in Africa with over <strong>500,000 subscribers</strong>.
-          </p>
-          <p class="text-slate-400 text-xs leading-relaxed">
-            As business partners, Odipo and Presenter Ali work together scouting, vetting, and accelerating top trading talent through real market mentorship and funded trader development.
-          </p>
-        </div>
-      </div>
-
-      <div class="mt-12 glass-card rounded-3xl p-8 border border-slate-800">
-        <h4 class="text-xl font-bold text-white mb-6 text-center">Featured Podcast Sessions</h4>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="aspect-video rounded-xl overflow-hidden border border-slate-800">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/O0mUlFJsRN0?start=701" title="Podcast 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <div class="aspect-video rounded-xl overflow-hidden border border-slate-800">
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/nXlg3rHxvxA?start=307" title="Podcast 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
         </div>
       </div>
     </div>
@@ -418,105 +509,21 @@
         <p class="text-slate-400 text-xs mt-2">Elite mentorship tiers engineered for rapid execution mastery and guaranteed capital scaling.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
         
-        <!-- Tier 1: Standard Tier -->
-        <div class="glass-card rounded-3xl p-6 border border-slate-800 flex flex-col justify-between glass-card-hover">
-          <div>
-            <span class="text-slate-400 text-[10px] font-mono-custom uppercase tracking-wider">FOUNDATIONAL PATH</span>
-            <h3 class="text-xl font-extrabold text-white mt-1">Standard Tier</h3>
-            <div class="inline-block px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono-custom mt-3">
-              ⏱ Profitability Horizon: &le; 3 Months
-            </div>
-
-            <ul class="text-xs text-slate-300 space-y-3 mt-6">
-              <li class="flex items-start space-x-2">
-                <span class="text-emerald-400 font-bold">✓</span>
-                <span>Pre-shot high-definition video masterclass course</span>
-              </li>
-              <li class="flex items-start space-x-2">
-                <span class="text-emerald-400 font-bold">✓</span>
-                <span>Weekly live trade setup review & video recap</span>
-              </li>
-              <li class="flex items-start space-x-2">
-                <span class="text-emerald-400 font-bold">✓</span>
-                <span>DBF Quantitative Trading Journal & Risk Engine</span>
-              </li>
-              <li class="flex items-start space-x-2">
-                <span class="text-emerald-400 font-bold">✓</span>
-                <span>Proprietary Lot Size Calculator Access</span>
-              </li>
-              <li class="flex items-start space-x-2">
-                <span class="text-emerald-400 font-bold">✓</span>
-                <span>Core Community Hub & Daily Pivot Recaps</span>
-              </li>
-            </ul>
-          </div>
-
-          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-slate-800 hover:bg-slate-700 text-white transition-all border border-slate-700">
-            Apply Now to Join
-          </button>
-        </div>
-
-        <!-- Tier 2: Accelerated Tier -->
-        <div class="glass-card rounded-3xl p-6 border border-[#00F2FE]/50 flex flex-col justify-between glass-card-hover relative">
-          <div>
-            <span class="text-[#00F2FE] text-[10px] font-mono-custom uppercase tracking-wider">FAST-TRACK SCALING</span>
-            <h3 class="text-xl font-extrabold text-white mt-1">Accelerated Tier</h3>
-            <div class="inline-block px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-[#00F2FE] text-[10px] font-mono-custom mt-3">
-              ⚡ Profitability Horizon: &le; 2 Months
-            </div>
-
-            <ul class="text-xs text-slate-300 space-y-3 mt-6">
-              <li class="flex items-start space-x-2">
-                <span class="text-[#00F2FE] font-bold">✓</span>
-                <span><strong>Everything in Standard Tier included</strong></span>
-              </li>
-              <li class="flex items-start space-x-2">
-                <span class="text-[#00F2FE] font-bold">✓</span>
-                <span>Live coaching with Odipo or Presenter Ali (2-3x per week)</span>
-              </li>
-              <li class="flex items-start space-x-2">
-                <span class="text-[#00F2FE] font-bold">✓</span>
-                <span>TradingView Trading Indicator (3-Month Access)</span>
-              </li>
-              <li class="flex items-start space-x-2">
-                <span class="text-[#00F2FE] font-bold">✓</span>
-                <span>Exclusive Pivot Levels Strategy E-Book</span>
-              </li>
-              <li class="flex items-start space-x-2">
-                <span class="text-[#00F2FE] font-bold">✓</span>
-                <span>Earn-While-You-Learn Live Execution Guidance</span>
-              </li>
-              <li class="flex items-start space-x-2">
-                <span class="text-[#00F2FE] font-bold">✓</span>
-                <span>Prop Firm Challenge Passing Protocol</span>
-              </li>
-            </ul>
-          </div>
-
-          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:scale-105 transition-all shadow-lg shadow-cyan-500/20">
-            Apply Now to Join
-          </button>
-        </div>
-
-        <!-- Tier 3: 1-on-1 VIP Tier -->
-        <div class="glass-card rounded-3xl p-6 border-2 border-amber-400/80 flex flex-col justify-between relative glass-card-hover-gold animate-gold-glow">
+        <!-- Tier 1: 1-on-1 VIP Tier -->
+        <div class="glass-card rounded-3xl p-8 border-2 border-amber-400/80 flex flex-col justify-between relative glass-card-hover-gold animate-gold-glow">
           <div>
             <div class="absolute -top-3 right-6 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-[9px] uppercase tracking-wider px-3 py-0.5 rounded-full shadow-md">
               MOST POPULAR
             </div>
             <span class="text-amber-400 text-[10px] font-mono-custom uppercase tracking-wider">DIRECT MENTORSHIP</span>
-            <h3 class="text-xl font-extrabold text-white mt-1">1-on-1 VIP Tier</h3>
+            <h3 class="text-2xl font-extrabold text-white mt-1">1-on-1 VIP Tier</h3>
             <div class="inline-block px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-mono-custom mt-3">
               🚀 Profitability Horizon: Immediate (&le; 2 Months)
             </div>
 
-            <ul class="text-xs text-slate-300 space-y-3 mt-6">
-              <li class="flex items-start space-x-2">
-                <span class="text-amber-400 font-bold">✓</span>
-                <span><strong>Everything in lower tiers included</strong></span>
-              </li>
+            <ul class="text-xs text-slate-300 space-y-3.5 mt-6">
               <li class="flex items-start space-x-2">
                 <span class="text-amber-400 font-bold">✓</span>
                 <span>First Lesson: Psychology & Risk Management from Day 1</span>
@@ -527,7 +534,7 @@
               </li>
               <li class="flex items-start space-x-2">
                 <span class="text-amber-400 font-bold">✓</span>
-                <span>Priority Signal Alerts & Trade Limits set before lower tiers</span>
+                <span>Priority Signal Alerts & Trade Limits</span>
               </li>
               <li class="flex items-start space-x-2">
                 <span class="text-amber-400 font-bold">✓</span>
@@ -537,27 +544,46 @@
                 <span class="text-amber-400 font-bold">✓</span>
                 <span>1-on-1 Personalized Training Sessions every 2 days</span>
               </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-amber-400 font-bold">✓</span>
+                <span>Complete access to core Pivot Points curriculum & community hub</span>
+              </li>
             </ul>
           </div>
 
-          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 hover:scale-105 transition-all shadow-lg shadow-amber-500/20">
-            Apply Now to Join
-          </button>
+          <div>
+            <button onclick="openFunnelModal('1-on-1 VIP Tier', 4)" class="w-full mt-8 py-4 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 hover:scale-105 transition-all shadow-lg shadow-amber-500/20">
+              Apply Now to Join
+            </button>
+
+            <!-- GLOWING RED URGENCY BOX UNDER BUTTON (SLIM & TIGHT FITTING) -->
+            <div class="mt-3 py-2 px-3 mx-auto w-fit max-w-full rounded-xl bg-gradient-to-r from-red-950/90 via-red-900/60 to-black/90 border border-red-500 animate-red-glow relative overflow-hidden text-center">
+              <div class="flex items-center justify-center space-x-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
+                <span id="vipCardSlots" class="text-[11px] font-extrabold text-red-100 uppercase font-mono-custom tracking-wider leading-tight">
+                  Slots Available: 3
+                </span>
+              </div>
+              <div id="vipCardApps" class="text-[10px] font-semibold text-red-200 tracking-tight leading-tight mt-0.5">
+                Applications Under Review: 12
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Tier 4: Turbo Charged Special -->
-        <div class="glass-card rounded-3xl p-6 border-2 border-purple-500/80 flex flex-col justify-between relative bg-gradient-to-b from-purple-950/30 to-[#05070B] shadow-2xl glass-card-hover-purple">
+        <!-- Tier 2: Turbo Charged Special -->
+        <div class="glass-card rounded-3xl p-8 border-2 border-purple-500/80 flex flex-col justify-between relative bg-gradient-to-b from-purple-950/30 to-[#05070B] shadow-2xl glass-card-hover-purple">
           <div>
             <div class="absolute -top-3 right-6 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-black text-[9px] uppercase tracking-wider px-3 py-0.5 rounded-full shadow-md">
               ULTIMATE INSTITUTIONAL
             </div>
             <span class="text-purple-400 text-[10px] font-mono-custom uppercase tracking-wider">1-ON-1 VIP TIER</span>
-            <h3 class="text-xl font-extrabold text-white mt-1">Turbo Charged Special</h3>
+            <h3 class="text-2xl font-extrabold text-white mt-1">Turbo Charged Special</h3>
             <div class="inline-block px-2.5 py-1 rounded-md bg-purple-500/20 border border-purple-500/40 text-purple-300 text-[10px] font-mono-custom mt-3">
               👑 At Your Service Super-Premium
             </div>
 
-            <ul class="text-xs text-slate-300 space-y-3 mt-6">
+            <ul class="text-xs text-slate-300 space-y-3.5 mt-6">
               <li class="flex items-start space-x-2">
                 <span class="text-purple-400 font-bold">✓</span>
                 <span><strong>FULL LIFETIME ACCESS across ALL tiers & future tools</strong></span>
@@ -585,9 +611,24 @@
             </ul>
           </div>
 
-          <button onclick="openFunnelModal()" class="w-full mt-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-400 text-white hover:scale-105 transition-all shadow-lg shadow-purple-500/30">
-            Apply Now for Turbo VIP
-          </button>
+          <div>
+            <button onclick="openFunnelModal('Turbo Charged Special', 2)" class="w-full mt-8 py-4 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-400 text-white hover:scale-105 transition-all shadow-lg shadow-purple-500/30">
+              Apply Now for Turbo VIP
+            </button>
+
+            <!-- GLOWING RED URGENCY BOX UNDER BUTTON (SLIM & TIGHT FITTING) -->
+            <div class="mt-3 py-2 px-3 mx-auto w-fit max-w-full rounded-xl bg-gradient-to-r from-red-950/90 via-red-900/60 to-black/90 border border-red-500 animate-red-glow relative overflow-hidden text-center">
+              <div class="flex items-center justify-center space-x-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
+                <span id="turboCardSlots" class="text-[11px] font-extrabold text-red-100 uppercase font-mono-custom tracking-wider leading-tight">
+                  Slots Available: 1
+                </span>
+              </div>
+              <div id="turboCardApps" class="text-[10px] font-semibold text-red-200 tracking-tight leading-tight mt-0.5">
+                Applications Under Review: 18
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -595,237 +636,345 @@
   </section>
 
   <!-- INTERACTIVE FAQ ACCORDION PAGE -->
-  <section id="faq" class="py-24 border-t border-slate-900 bg-[#05070B]">
+  <section id="faq" class="py-20 sm:py-24 border-t border-slate-900 bg-[#05070B]">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
+      <div class="text-center mb-12 sm:mb-16">
         <span class="text-[#00F2FE] text-xs font-mono-custom uppercase tracking-widest">FAQ</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Frequently Asked Questions</h2>
+        <h2 class="text-2xl sm:text-4xl font-bold text-white mt-2">Frequently Asked Questions</h2>
       </div>
 
       <div class="space-y-4">
         <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
-          <button onclick="toggleFAQ(1)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
+          <button onclick="toggleFAQ(1)" class="w-full p-5 sm:p-6 text-left flex justify-between items-center text-white text-xs sm:text-sm font-bold focus:outline-none hover:text-[#00F2FE] transition-colors">
             <span>What trading methodology does Data-Based FX use?</span>
-            <span id="faqIcon1" class="text-[#00F2FE] text-xl font-bold transition-transform">&plus;</span>
+            <span id="faqIcon1" class="text-[#00F2FE] text-xl font-bold transition-transform ml-3">&plus;</span>
           </button>
-          <div id="faqContent1" class="hidden px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
-            We trade one data-proven approach called the <strong>Pivot Levels Strategy</strong> across FX, Metals (Gold), and Indices. It combines structural price action, liquidity sweeps, and high-probability risk-reward ratios (targeting 10RR setups).
+          <div id="faqContent1" class="hidden px-5 sm:px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
+            We trade one data-proven approach called the <strong>Pivot Points Strategy</strong> across FX, Metals (Gold), and Indices. It combines structural price action, liquidity sweeps, and high-probability risk-reward ratios (targeting 10RR setups).
           </div>
         </div>
 
         <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
-          <button onclick="toggleFAQ(2)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
+          <button onclick="toggleFAQ(2)" class="w-full p-5 sm:p-6 text-left flex justify-between items-center text-white text-xs sm:text-sm font-bold focus:outline-none hover:text-[#00F2FE] transition-colors">
             <span>Do I need prior trading experience to join?</span>
-            <span id="faqIcon2" class="text-[#00F2FE] text-xl font-bold transition-transform">&plus;</span>
+            <span id="faqIcon2" class="text-[#00F2FE] text-xl font-bold transition-transform ml-3">&plus;</span>
           </button>
-          <div id="faqContent2" class="hidden px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
+          <div id="faqContent2" class="hidden px-5 sm:px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
             No. Our mentorship programs accommodate all levels—from beginners mastering foundational risk management to advanced traders passing prop firm challenges.
           </div>
         </div>
 
         <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
-          <button onclick="toggleFAQ(3)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
+          <button onclick="toggleFAQ(3)" class="w-full p-5 sm:p-6 text-left flex justify-between items-center text-white text-xs sm:text-sm font-bold focus:outline-none hover:text-[#00F2FE] transition-colors">
             <span>Which broker or platform do I need?</span>
-            <span id="faqIcon3" class="text-[#00F2FE] text-xl font-bold transition-transform">&plus;</span>
+            <span id="faqIcon3" class="text-[#00F2FE] text-xl font-bold transition-transform ml-3">&plus;</span>
           </button>
-          <div id="faqContent3" class="hidden px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
+          <div id="faqContent3" class="hidden px-5 sm:px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
             You can use any regulated broker or prop firm that supports MetaTrader 4 (MT4), MetaTrader 5 (MT5), or cTrader.
           </div>
         </div>
 
         <div class="glass-card rounded-2xl border border-slate-800 overflow-hidden">
-          <button onclick="toggleFAQ(4)" class="w-full p-6 text-left flex justify-between items-center text-white text-sm font-bold focus:outline-none">
+          <button onclick="toggleFAQ(4)" class="w-full p-5 sm:p-6 text-left flex justify-between items-center text-white text-xs sm:text-sm font-bold focus:outline-none hover:text-[#00F2FE] transition-colors">
             <span>How does the One-on-One Access onboarding work?</span>
-            <span id="faqIcon4" class="text-[#00F2FE] text-xl font-bold transition-transform">&plus;</span>
+            <span id="faqIcon4" class="text-[#00F2FE] text-xl font-bold transition-transform ml-3">&plus;</span>
           </button>
-          <div id="faqContent4" class="hidden px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
-            Click "Apply Now to Join" to fill out our screening form. We assess your background, trading budget, and capital goals before scheduling a direct onboarding call with Odipo the Trader.
+          <div id="faqContent4" class="hidden px-5 sm:px-6 pb-6 text-xs text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
+            Click "Apply Now to Join" to fill out our screening form. We assess your background, trading budget, and capital goals before scheduling a direct onboarding call with one of the DBF representatives.
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- REVISED ACCORDION ONBOARDING QUESTIONNAIRE MODAL -->
+  <!-- REVISED SINGLE-STEP APPLICATION MODAL -->
   <div id="funnelModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
-    <div class="glass-card max-w-2xl w-full rounded-3xl p-6 sm:p-8 border border-slate-700 max-h-[92vh] overflow-y-auto relative shadow-2xl">
-      <button onclick="closeFunnelModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white font-bold text-2xl transition-colors">&times;</button>
+    <div class="bg-[#050C1A] max-w-xl w-full rounded-2xl p-7 sm:p-9 border border-[#00F2FE]/40 relative shadow-[0_0_50px_rgba(0,242,254,0.15)] max-h-[92vh] overflow-y-auto">
       
-      <div class="text-center mb-8">
-        <span class="text-[#00F2FE] text-[10px] font-mono-custom uppercase tracking-widest">Selective Onboarding Application</span>
-        <h3 class="text-2xl font-extrabold text-white mt-1">One-on-One Access Qualification</h3>
-        <p class="text-xs text-slate-400 mt-1">Complete the chronological questions below to unlock your direct onboarding interview.</p>
+      <!-- Close Button -->
+      <button onclick="closeFunnelModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white font-bold text-xl transition-colors">&times;</button>
+      
+      <!-- Header Title -->
+      <h3 id="modalTitle" class="text-2xl font-bold text-white tracking-tight mb-5">
+        1–on–1 Mentorship Application
+      </h3>
+
+      <!-- URGENCY & AVAILABILITY BANNER (COMPACT RED GLOW) -->
+      <div class="mb-6 py-2.5 px-4 mx-auto w-fit max-w-full rounded-xl bg-gradient-to-r from-red-950/90 via-red-900/60 to-black/90 border border-red-500 animate-red-glow relative overflow-hidden text-center">
+        <div class="flex items-center justify-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+          <span id="tierSlotsAvailableText" class="text-xs sm:text-sm font-black tracking-wide text-red-100 uppercase font-mono-custom">
+            Slots Available: 4
+          </span>
+        </div>
+
+        <div class="flex items-center justify-center space-x-3 text-xs mt-1">
+          <span id="tierAppsReviewText" class="text-red-200 font-bold tracking-tight text-[11px]">
+            Applications Under Review: 14
+          </span>
+          <span class="text-[10px] text-red-300 font-medium italic">— High Demand</span>
+        </div>
       </div>
 
-      <form id="funnelForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+      <!-- Note Banner -->
+      <div class="bg-[#0A162D] border-l-4 border-[#00F2FE] p-4 rounded-r-xl mb-6">
+        <p id="modalNote" class="text-xs text-slate-300 leading-relaxed font-normal">
+          <strong>Note:</strong> <span id="tierNoteText">1-on-1 VIP Tier mentorship is strictly limited to 4 spots per month.</span> Applicants are vetted based on their needs, target timeframe, and planned capital commitment. You will only be contacted if a slot is available.
+        </p>
+      </div>
+
+      <!-- Step Progress Indicators (8 Steps) -->
+      <div class="grid grid-cols-8 gap-1.5 mb-8">
+        <div id="stepProgress1" class="h-1.5 rounded-full bg-[#00F2FE] transition-colors"></div>
+        <div id="stepProgress2" class="h-1.5 rounded-full bg-slate-800 transition-colors"></div>
+        <div id="stepProgress3" class="h-1.5 rounded-full bg-slate-800 transition-colors"></div>
+        <div id="stepProgress4" class="h-1.5 rounded-full bg-slate-800 transition-colors"></div>
+        <div id="stepProgress5" class="h-1.5 rounded-full bg-slate-800 transition-colors"></div>
+        <div id="stepProgress6" class="h-1.5 rounded-full bg-slate-800 transition-colors"></div>
+        <div id="stepProgress7" class="h-1.5 rounded-full bg-slate-800 transition-colors"></div>
+        <div id="stepProgress8" class="h-1.5 rounded-full bg-slate-800 transition-colors"></div>
+      </div>
+
+      <form id="funnelForm" onsubmit="handleFormSubmit(event)">
         
-        <!-- QUESTION 1 -->
-        <div id="qBlock-1" class="border border-slate-800 rounded-2xl p-5 bg-[#080D1A]/60 transition-all">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-extrabold text-white">1. Current Employment Status</span>
-            <span id="qBadge-1" class="text-[9px] font-mono-custom px-2 py-0.5 rounded bg-cyan-950 text-[#00F2FE] border border-[#00F2FE]/30">Active</span>
-          </div>
-          
-          <div id="qOptions-1" class="space-y-2.5 mt-4">
-            <div onclick="selectOption(1, 'Employed', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+        <!-- STEP 1: EMPLOYMENT -->
+        <div id="wizardStep1" class="space-y-4">
+          <label class="block text-base font-bold text-white leading-snug">
+            1. Current Employment Status:
+          </label>
+          <div class="space-y-3">
+            <div onclick="selectStepOption(1, 'Employed', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
               <span class="text-xs text-slate-200 font-medium">Employed (Full-Time / Part-Time)</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption(1, 'Self-Employed / Business Owner', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+            <div onclick="selectStepOption(1, 'Self-Employed / Business Owner', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
               <span class="text-xs text-slate-200 font-medium">Self-Employed / Business Owner</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption(1, 'Student', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+            <div onclick="selectStepOption(1, 'Student', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
               <span class="text-xs text-slate-200 font-medium">Student</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption(1, 'Unemployed / Looking for Opportunities', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
+            <div onclick="selectStepOption(1, 'Unemployed / Looking for Opportunities', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
               <span class="text-xs text-slate-200 font-medium">Unemployed / Looking for Opportunities</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
           </div>
         </div>
 
-        <!-- QUESTION 2 -->
-        <div id="qBlock-2" class="border border-slate-800/50 rounded-2xl p-5 bg-[#080D1A]/20 opacity-50 transition-all">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-extrabold text-white">2. Primary Trading Goal</span>
-            <span id="qBadge-2" class="text-[9px] font-mono-custom px-2 py-0.5 rounded bg-slate-900 text-slate-500">Locked</span>
-          </div>
-          
-          <div id="qOptions-2" class="space-y-2.5 hidden mt-4">
-            <div onclick="selectOption(2, 'Full-Time Financial Freedom', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">Full-Time Financial Freedom</span>
+        <!-- STEP 2: EXPERIENCE LEVEL -->
+        <div id="wizardStep2" class="space-y-4 hidden">
+          <label class="block text-base font-bold text-white leading-snug">
+            2. What is your current experience as a trader?
+          </label>
+          <div class="space-y-3">
+            <div onclick="selectStepOption(2, 'I have never traded, I am here to learn', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">I have never traded, I am here to learn</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption(2, 'Quit My Current Job within 6 Months', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">Quit My Current Job within 6 Months</span>
+            <div onclick="selectStepOption(2, 'I have taken a few demo trades before', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">I have taken a few demo trades before</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption(2, 'Consistent Supplemental Income ($1,000 - $3,000/mo)', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">Consistent Supplemental Income ($1,000 - $3,000/mo)</span>
+            <div onclick="selectStepOption(2, 'I have taken a few trades with funded accounts/real capital', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">I have taken a few trades with funded accounts/real capital</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption(2, 'Consistent Income of $3500 - $10,000 From My Own Capital', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">Consistent Income of $3,500 - $10,000 From My Own Capital</span>
-              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
-            </div>
-            <div onclick="selectOption(2, 'Scale Capital via Prop Firms ($10,000+/mo)', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">Scale Capital via Prop Firms ($10,000+/mo)</span>
-              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
-            </div>
-            <div onclick="selectOption(2, 'Consistent Income of $20,000 - $100,000 Plus From My Own Capital & Prop Firms.', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">Consistent Income of $20,000 - $100,000 Plus From My Own Capital & Prop Firms.</span>
+            <div onclick="selectStepOption(2, 'I am an experienced trader', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">I am an experienced trader</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
           </div>
         </div>
 
-        <!-- QUESTION 3 -->
-        <div id="qBlock-3" class="border border-slate-800/50 rounded-2xl p-5 bg-[#080D1A]/20 opacity-50 transition-all">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-extrabold text-white">3. Capital Available to Trade Once Profitable</span>
-            <span id="qBadge-3" class="text-[9px] font-mono-custom px-2 py-0.5 rounded bg-slate-900 text-slate-500">Locked</span>
-          </div>
-          
-          <div id="qOptions-3" class="space-y-2.5 hidden mt-4">
-            <div onclick="selectOption(3, 'Under $1,000', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">Under $1,000</span>
+        <!-- STEP 3: GOAL OF GETTING INTO TRADING -->
+        <div id="wizardStep3" class="space-y-4 hidden">
+          <label class="block text-base font-bold text-white leading-snug">
+            3. What is your goal of getting into trading?
+          </label>
+          <div class="space-y-3">
+            <div onclick="selectStepOption(3, 'I want to trade on the side of my main gig: $3k-$5k/mo in net income', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">I want to trade on the side of my main gig: $3k-$5k/mo in net income</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption(3, '$1,000 to $2,500', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">$1,000 to $2,500</span>
+            <div onclick="selectStepOption(3, 'I want to make trading my main source of income: $5k-$10k/mo in net income', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">I want to make trading my main source of income: $5k-$10k/mo in net income</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption(3, '$2,500 to $5,000', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">$2,500 to $5,000</span>
+            <div onclick="selectStepOption(3, 'I am ambitious and want to scale up fast: $10k-$25k/mo in net income', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">I am ambitious and want to scale up fast: $10k-$25k/mo in net income</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption(3, '$5,000 to $15,000', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">$5,000 to $15,000</span>
-              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
-            </div>
-            <div onclick="selectOption(3, '$20,000 to $100,000+', this)" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">$20,000 to $100,000+</span>
+            <div onclick="selectStepOption(3, 'I want to scale up aggressively: $30k-$100k+/mo in net income', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">I want to scale up aggressively: $30k-$100k+/mo in net income</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
           </div>
         </div>
 
-        <!-- QUESTION 4 (STAYS OPEN TILL Q5 IS CLICKED + PAUSE AUTO-ADVANCE) -->
-        <div id="qBlock-4" class="border border-slate-800/50 rounded-2xl p-5 bg-[#080D1A]/20 opacity-50 transition-all">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-extrabold text-white">4. Available Amount TODAY to Invest In Your Tier If Your Profitability is Guaranteed</span>
-            <span id="qBadge-4" class="text-[9px] font-mono-custom px-2 py-0.5 rounded bg-slate-900 text-slate-500">Locked</span>
+        <!-- STEP 4: INCOME REPLACEMENT NEED -->
+        <div id="wizardStep4" class="space-y-4 hidden">
+          <label class="block text-base font-bold text-white leading-snug">
+            4. How much would we need to help you make to replace your current income?
+          </label>
+          <div class="space-y-3">
+            <div onclick="selectStepOption(4, '$1k/mo USD Or Less', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$1k/mo USD Or Less</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectStepOption(4, '$1k-$5k/mo USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$1k-$5k/mo USD</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectStepOption(4, '$5k-$10k/mo USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$5k-$10k/mo USD</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectStepOption(4, '$10k-$25k/mo USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$10k-$25k/mo USD</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectStepOption(4, '$30k-$100k+/mo USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$30k-$100k+/mo USD</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
           </div>
+        </div>
 
-          <div id="qOptions-4" class="space-y-3 hidden mt-4">
-            <div onclick="selectOption4(this, 'I can TODAY invest about $549 for Standard Tier')" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">I can TODAY invest about $549 for Standard Tier</span>
+        <!-- STEP 5: BIGGEST STRUGGLE -->
+        <div id="wizardStep5" class="space-y-4 hidden">
+          <label class="block text-base font-bold text-white leading-snug">
+            5. What's been the biggest struggle so far in reaching your goals with trading?
+          </label>
+          <p class="text-xs text-slate-400 font-normal">
+            (We only take a limited number of enrollments each quarter, so please be as specific as possible)
+          </p>
+          <div>
+            <textarea id="funnelStruggleInput" rows="3" oninput="handleStruggleInput(this)" placeholder="Type your answer here..." class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3.5 text-white text-xs outline-none focus:border-[#00F2FE] transition-colors resize-none"></textarea>
+          </div>
+        </div>
+
+        <!-- STEP 6: TRADING CAPITAL INVESTMENT -->
+        <div id="wizardStep6" class="space-y-4 hidden">
+          <label class="block text-base font-bold text-white leading-snug">
+            6. Amount I plan to invest for my trading capital once I am profitable ($):
+          </label>
+          <div class="space-y-3">
+            <div onclick="selectStepOption(6, '$1k/mo USD Or Less', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$1k/mo USD Or Less</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption4(this, 'I can invest TODAY between $800 to $1,500 for maximum features of Accelerated Tier')" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">I can invest TODAY between $800 to $1,500 for maximum features of Accelerated Tier</span>
+            <div onclick="selectStepOption(6, '$1k-$5k/mo USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$1k-$5k/mo USD</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption4(this, 'I can TODAY invest $2,000 and above for all features of 1-on-1 VIP Tier')" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">I can TODAY invest $2,000 and above for all features of 1-on-1 VIP Tier</span>
+            <div onclick="selectStepOption(6, '$5k-$10k/mo USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$5k-$10k/mo USD</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
-            <div onclick="selectOption4(this, 'I can invest $15,000 and above for all packages of Turbo Charged Special Tier')" class="option-card p-3.5 rounded-xl cursor-pointer flex items-center justify-between">
-              <span class="text-xs text-slate-200 font-medium">I can invest $15,000 and above for all packages of Turbo Charged Special Tier</span>
+            <div onclick="selectStepOption(6, '$10k-$25k/mo USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$10k-$25k/mo USD</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectStepOption(6, '$30k-$100k+/mo USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$30k-$100k+/mo USD</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 7: IMMEDIATE INVESTMENT COMMITMENT -->
+        <div id="wizardStep7" class="space-y-4 hidden">
+          <label class="block text-base font-bold text-white leading-snug">
+            7. Imagine....it's 6 months from today, and you have now accomplished your goal of becoming a profitable trader...
+          </label>
+          <p class="text-xs text-slate-300 leading-relaxed font-normal">
+            To make this your reality... how much are you willing to invest into (i) becoming a profitable trader, and (ii) receiving world-class coaching and mentorship?
+          </p>
+          <p class="text-[11px] text-amber-400 font-medium leading-relaxed">
+            * Please ONLY include funds that you currently have available or accessible via credit card. Exclude future available funds.
+          </p>
+          <div class="space-y-3 pt-1">
+            <div onclick="selectStepOption(7, '$2000 USD or less', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$2000 USD or less</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectStepOption(7, '$2000-$3500 USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$2000-$3500 USD</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectStepOption(7, '$3500-$5500 USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$3500-$5500 USD</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectStepOption(7, '$5500-$15000+ USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$5500-$15000+ USD</span>
+              <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
+            </div>
+            <div onclick="selectStepOption(7, '$20,000 - $40,000 USD', this)" class="option-card p-4 rounded-xl cursor-pointer flex items-center justify-between border border-slate-800 bg-[#0A1325]">
+              <span class="text-xs text-slate-200 font-medium">$20,000 - $40,000 USD</span>
               <div class="radio-circle w-5 h-5 rounded-full flex items-center justify-center"></div>
             </div>
 
-            <!-- Mandatory User Input Field ($300 - $20,000) -->
-            <div class="pt-3 border-t border-slate-800/80">
-              <label class="block font-bold text-slate-300 text-xs mb-1.5">
-                Specific Amount in Mind Now in (USD) <span class="text-red-400">*</span>
+            <div class="pt-2">
+              <label class="block text-slate-300 text-xs font-bold mb-1.5">
+                Specific Amount in USD <span class="text-red-400">*</span>
               </label>
-              <div class="relative">
-                <span class="absolute left-4 top-3 text-slate-500 font-mono-custom text-xs">$</span>
-                <input type="text" id="funnelAmountInput" oninput="handleAmountTyping(this)" placeholder="Enter digit amount (e.g. 1500)" class="w-full bg-[#03060C] border border-slate-700 rounded-xl py-2.5 pl-8 pr-4 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
-              </div>
-              <p id="amountError" class="text-[10px] text-red-400 font-mono-custom mt-1 hidden">
-                Please enter a valid numeric dollar amount between $300 and $20,000.
+              <input type="text" id="funnelAmountInput" required oninput="handleAmountTyping(this)" placeholder="Enter a specific competitive amount in USD e.g $3,500" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3.5 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
+              <p id="amountError" class="text-[10px] text-red-400 font-mono-custom mt-1.5 hidden">
+                Please enter a competative valid numeric dollar amount up to $40,000 max
               </p>
             </div>
           </div>
         </div>
 
-        <!-- QUESTION 5 (AUTO-COLLAPSES Q4 UPON TYPING + 2-MIN AUTO SUBMIT) -->
-        <div id="qBlock-5" onclick="onQuestion5Focus()" class="border border-slate-800/50 rounded-2xl p-5 bg-[#080D1A]/20 opacity-50 transition-all">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-extrabold text-white">5. Final Onboarding Information</span>
-            <span id="qBadge-5" class="text-[9px] font-mono-custom px-2 py-0.5 rounded bg-slate-900 text-slate-500">Locked</span>
-          </div>
-
-          <div id="qOptions-5" class="space-y-4 hidden mt-4">
+        <!-- STEP 8: CONTACT DETAILS & CALL SCHEDULING -->
+        <div id="wizardStep8" class="space-y-4 hidden">
+          <label class="block text-base font-bold text-white leading-snug">
+            8. Go ahead and book in your time slot with one of our coaches, so they can create a <em class="text-[#00F2FE]">custom game plan</em> of how we can help you hit your goals with trading*
+          </label>
+          <div class="space-y-3">
             <div>
-              <label class="block font-bold text-slate-300 text-xs mb-1">Full Name <span class="text-red-400">*</span></label>
-              <input type="text" id="funnelName" onfocus="onQuestion5Focus()" oninput="checkFormActivity()" required placeholder="John Doe" class="w-full bg-[#03060C] border border-slate-700 rounded-xl p-3 text-white text-xs outline-none focus:border-[#00F2FE]">
+              <label class="block text-slate-400 text-[10px] font-mono-custom mb-1 uppercase">FULL NAME *</label>
+              <input type="text" id="funnelName" required placeholder="John Doe" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white text-xs outline-none focus:border-[#00F2FE]">
             </div>
 
             <div>
-              <label class="block font-bold text-slate-300 text-xs mb-1">WhatsApp Number (Include Country Code) <span class="text-red-400">*</span></label>
-              <input type="text" id="funnelPhone" onfocus="onQuestion5Focus()" required oninput="handlePhoneInput(this)" placeholder="+254700000000" class="w-full bg-[#03060C] border border-slate-700 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
+              <label class="block text-slate-400 text-[10px] font-mono-custom mb-1 uppercase">WHATSAPP NUMBER (WITH COUNTRY CODE) *</label>
+              <input type="text" id="funnelPhone" required oninput="handlePhoneInput(this)" placeholder="+254700000000" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
               <p id="phoneError" class="text-[10px] text-red-400 font-mono-custom mt-1 hidden">
                 Only digits are accepted after the (+) country code prefix.
               </p>
             </div>
 
             <div>
-              <label class="block font-bold text-slate-300 text-xs mb-1">Email Address <span class="text-red-400">*</span></label>
-              <input type="email" id="funnelEmail" onfocus="onQuestion5Focus()" required oninput="validateEmailInput(this)" placeholder="name@example.com" class="w-full bg-[#03060C] border border-slate-700 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
+              <label class="block text-slate-400 text-[10px] font-mono-custom mb-1 uppercase">EMAIL ADDRESS *</label>
+              <input type="email" id="funnelEmail" required oninput="validateEmailInput(this)" placeholder="name@example.com" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
               <p id="emailError" class="text-[10px] text-red-400 font-mono-custom mt-1 hidden">
                 Please enter a valid email address containing a domain (e.g. name@domain.com).
               </p>
             </div>
 
-            <button type="submit" id="submitBtn" class="w-full py-4 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] via-[#00F2FE] to-amber-400 text-slate-950 hover:scale-[1.02] transition-all shadow-lg shadow-cyan-500/25 mt-4">
-              Submit Application for Review
-            </button>
+            <div class="pt-2">
+              <label class="block text-slate-400 text-[10px] font-mono-custom mb-2 uppercase">SELECT YOUR PREFERRED CALL DATE *</label>
+              <input type="date" id="bookingDate" required class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
+            </div>
           </div>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="mt-8 flex items-center justify-between gap-4">
+          <button type="button" id="prevBtn" onclick="navigateStep(-1)" class="px-5 py-3 rounded-xl font-bold text-xs bg-slate-800 text-slate-300 hover:text-white hidden">
+            Previous
+          </button>
+          
+          <button type="button" id="nextBtn" onclick="navigateStep(1)" class="px-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-[#00A8FF] to-[#00F2FE] text-slate-950 hover:scale-105 transition-all shadow-lg shadow-cyan-500/25 ml-auto">
+            Next Step
+          </button>
+
+          <button type="submit" id="submitBtn" class="px-8 py-3.5 rounded-xl font-black text-xs uppercase tracking-wider bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 hover:scale-105 transition-all shadow-lg shadow-amber-500/25 hidden ml-auto">
+            Book Game Plan Session & Submit
+          </button>
         </div>
 
       </form>
@@ -838,8 +987,8 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
         <div class="lg:col-span-6">
           <div class="flex items-center space-x-3 mb-4">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#00A8FF] to-[#00F2FE] flex items-center justify-center font-black text-slate-950 text-xs tracking-wider">
-              DBF
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#00A8FF] to-[#00F2FE] flex items-center justify-center font-black text-slate-950 text-xs tracking-wider overflow-hidden">
+              <img src="logo.png" alt="DBF Logo" class="w-full h-full object-cover">
             </div>
             <span class="text-base font-extrabold tracking-wider text-white">
               DATA-BASED <span class="text-[#00F2FE]">FX</span>
@@ -861,10 +1010,9 @@
         <div class="lg:col-span-3">
           <h5 class="text-xs font-mono-custom uppercase tracking-widest text-slate-200 mb-4">NAVIGATION</h5>
           <ul class="space-y-2.5 text-xs text-slate-400 font-medium">
-            <li><a href="#backtested-results" class="hover:text-white transition-colors">Overview & Results</a></li>
-            <li><a href="#breakdowns" class="hover:text-white transition-colors">Verified Breakdowns</a></li>
+            <li><a href="#breakdowns" class="hover:text-white transition-colors">Verified Trade Breakdowns</a></li>
             <li><a href="#calculator" class="hover:text-white transition-colors">Risk Calculator</a></li>
-            <li><a href="#mentors" class="hover:text-white transition-colors">Mentors (Odipo)</a></li>
+            <li><a href="#coaches" class="hover:text-white transition-colors">Coaches</a></li>
           </ul>
         </div>
 
@@ -895,146 +1043,209 @@
   </footer>
 
   <script>
-    let currentStep = 1;
+    // Breakdowns Carousel Data Matrix derived from actual screenshots
+    const breakdownData = {
+      forex: [
+        { img: 'forex-eurusd.png', title: 'EURUSD Backtest Data', winRate: '64.3%', rr: '10RR', be: '6.7%' },
+        { img: 'forex-gbpusd.png', title: 'GBPUSD Backtest Data', winRate: '55.6%', rr: '10RR', be: '18.2%' },
+        { img: 'forex-audusd.png', title: 'AUDUSD Backtest Data', winRate: '55.6%', rr: '10RR', be: '35.7%' },
+        { img: 'forex-usdcad.png', title: 'USDCAD Backtest Data', winRate: '87.5%', rr: '10RR', be: '27.3%' },
+        { img: 'forex-usdchf.png', title: 'USDCHF Backtest Data', winRate: '57.1%', rr: '10RR', be: '0.0%' },
+        { img: 'forex-usdjpy.png', title: 'USDJPY Backtest Data', winRate: '45.5%', rr: '10RR', be: '21.4%' }
+      ],
+      metals: [
+        { img: 'metals -gold.png', title: 'XAU/USD Gold Strategy Performance', winRate: '63.6%', rr: '10RR', be: '0.0%' },
+        { img: 'metals-silver.png', title: 'XAG/USD Silver Strategy Performance', winRate: '50.0%', rr: '10RR', be: '5.9%' }
+      ],
+      indices: [
+        { img: 'indices-nas100.png', title: 'NAS100 Index Strategy Performance', winRate: '55.6%', rr: '10RR', be: '10.0%' },
+        { img: 'indices-spx500.png', title: 'SPX500 Index Strategy Performance', winRate: '68.8%', rr: '10RR', be: '0.0%' },
+        { img: 'indices-us30.png', title: 'US30 Dow Jones Strategy Performance', winRate: '81.3%', rr: '10RR', be: '15.8%' }
+      ]
+    };
+
+    let carouselIndices = { forex: 0, metals: 0, indices: 0 };
+    let currentLightboxCategory = 'forex';
+    let autoSlideIntervals = {};
+
+    function updateCategoryCard(cat) {
+      const idx = carouselIndices[cat];
+      const item = breakdownData[cat][idx];
+
+      const imgEl = document.getElementById(`${cat}Image`);
+      if (imgEl) {
+        imgEl.style.opacity = '0.3';
+        setTimeout(() => {
+          imgEl.src = item.img;
+          imgEl.style.opacity = '1';
+        }, 150);
+      }
+
+      document.getElementById(`${cat}Title`).innerText = item.title;
+      document.getElementById(`${cat}WinRate`).innerText = item.winRate;
+      document.getElementById(`${cat}RR`).innerText = item.rr;
+      document.getElementById(`${cat}BE`).innerText = item.be;
+      document.getElementById(`${cat}Counter`).innerText = `${idx + 1} / ${breakdownData[cat].length}`;
+    }
+
+    function slideCategory(cat, direction) {
+      const total = breakdownData[cat].length;
+      carouselIndices[cat] = (carouselIndices[cat] + direction + total) % total;
+      updateCategoryCard(cat);
+    }
+
+    // Start automatic sliding from right to left for all breakdown cards
+    function startAutoSlide() {
+      ['forex', 'metals', 'indices'].forEach(cat => {
+        if (!autoSlideIntervals[cat]) {
+          autoSlideIntervals[cat] = setInterval(() => {
+            slideCategory(cat, 1);
+          }, 4000); // Cycles every 4 seconds
+        }
+      });
+    }
+
+    function stopAutoSlide() {
+      ['forex', 'metals', 'indices'].forEach(cat => {
+        if (autoSlideIntervals[cat]) {
+          clearInterval(autoSlideIntervals[cat]);
+          autoSlideIntervals[cat] = null;
+        }
+      });
+    }
+
+    function openLightbox(cat) {
+      currentLightboxCategory = cat;
+      const modal = document.getElementById('breakdownLightbox');
+      modal.classList.remove('hidden');
+      stopAutoSlide(); // Pause automatic carousel sliding while viewing full screen
+      updateLightboxDisplay();
+    }
+
+    function closeLightbox() {
+      document.getElementById('breakdownLightbox').classList.add('hidden');
+      startAutoSlide(); // Resume automatic carousel sliding upon close
+    }
+
+    function slideLightbox(direction) {
+      slideCategory(currentLightboxCategory, direction);
+      updateLightboxDisplay();
+    }
+
+    function updateLightboxDisplay() {
+      const idx = carouselIndices[currentLightboxCategory];
+      const item = breakdownData[currentLightboxCategory][idx];
+
+      document.getElementById('lightboxImage').src = item.img;
+      document.getElementById('lightboxTitle').innerText = item.title;
+      document.getElementById('lightboxWinRate').innerText = item.winRate;
+      document.getElementById('lightboxRR').innerText = item.rr;
+      document.getElementById('lightboxBE').innerText = item.be;
+    }
+
+    // FAQ Accordion Toggle Function
+    function toggleFAQ(num) {
+      const content = document.getElementById(`faqContent${num}`);
+      const icon = document.getElementById(`faqIcon${num}`);
+      if (!content || !icon) return;
+
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.innerHTML = '&minus;';
+      } else {
+        content.classList.add('hidden');
+        icon.innerHTML = '&plus;';
+      }
+    }
+
+    let activeStep = 1;
     let selectedAnswers = {};
-    let amountPauseTimer = null;
-    let autoSubmitTimer = null;
-    let q4Closed = false;
+    let countdownInterval = null;
 
-    function openFunnelModal() {
-      document.getElementById('funnelModal').classList.remove('hidden');
+    // Helper to get or generate persistent 12-hour data per tier
+    function getTierUrgencyData(storageKey, isTurbo) {
+      const now = Date.now();
+      const TWELVE_HOURS_MS = 12 * 60 * 60 * 1000;
+      let data = JSON.parse(localStorage.getItem(storageKey));
+
+      if (!data || !data.timestamp || (now - data.timestamp) >= TWELVE_HOURS_MS) {
+        data = {
+          timestamp: now,
+          slots: isTurbo ? 1 : Math.floor(Math.random() * 4) + 1,
+          apps: Math.floor(Math.random() * 15) + 8
+        };
+        localStorage.setItem(storageKey, JSON.stringify(data));
+      }
+      return data;
     }
 
-    function closeFunnelModal() {
-      document.getElementById('funnelModal').classList.add('hidden');
-      if (autoSubmitTimer) clearTimeout(autoSubmitTimer);
+    // Refresh display on cards on page load and live interval
+    function refreshAllUrgencyCards() {
+      const vipData = getTierUrgencyData('vip_urgency_data', false);
+      const turboData = getTierUrgencyData('turbo_urgency_data', true);
+
+      document.getElementById('vipCardSlots').innerText = `Slots Available: ${vipData.slots}`;
+      document.getElementById('vipCardApps').innerText = `Applications Under Review: ${vipData.apps}`;
+
+      document.getElementById('turboCardSlots').innerText = `Slots Available: ${turboData.slots}`;
+      document.getElementById('turboCardApps').innerText = `Applications Under Review: ${turboData.apps}`;
     }
 
-    // Questions 1, 2, 3: Immediately Collapse and Lock Selected Step
-    function selectOption(qNum, value, el) {
-      if (qNum > currentStep) {
-        alert(`Please complete Question ${currentStep} first before proceeding.`);
-        const targetBlock = document.getElementById(`qBlock-${currentStep}`);
-        if (targetBlock) {
-          targetBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        return;
-      }
+    // Dynamic 12-Hour Urgency Slots Engine inside Modal
+    function updateUrgencyStats(tierName) {
+      const isTurbo = tierName === 'Turbo Charged Special';
+      const storageKey = isTurbo ? 'turbo_urgency_data' : 'vip_urgency_data';
+      const data = getTierUrgencyData(storageKey, isTurbo);
 
-      selectedAnswers[`q${qNum}`] = value;
+      // Update Modal elements
+      document.getElementById('tierSlotsAvailableText').innerText = `Slots Available: ${data.slots}`;
+      document.getElementById('tierAppsReviewText').innerText = `Applications Under Review: ${data.apps}`;
 
-      const optionsContainer = document.getElementById(`qOptions-${qNum}`);
-      const cards = optionsContainer.querySelectorAll('.option-card');
-      cards.forEach(card => card.classList.remove('selected'));
-      el.classList.add('selected');
+      // Handle Background Timer Check
+      if (countdownInterval) clearInterval(countdownInterval);
 
-      const currentBadge = document.getElementById(`qBadge-${qNum}`);
-      if (currentBadge) {
-        currentBadge.innerText = 'Completed ✓';
-        currentBadge.className = 'text-[9px] font-mono-custom px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/30';
-      }
+      function checkBackgroundTimer() {
+        const currentTime = Date.now();
+        const TWELVE_HOURS_MS = 12 * 60 * 60 * 1000;
+        const elapsed = currentTime - data.timestamp;
 
-      // Collapse option card container immediately
-      optionsContainer.classList.add('hidden');
-
-      if (qNum === currentStep && currentStep < 4) {
-        currentStep++;
-        const nextBlock = document.getElementById(`qBlock-${currentStep}`);
-        const nextOptions = document.getElementById(`qOptions-${currentStep}`);
-        const nextBadge = document.getElementById(`qBadge-${currentStep}`);
-
-        if (nextBlock && nextOptions) {
-          nextBlock.classList.remove('opacity-50', 'bg-[#080D1A]/20');
-          nextBlock.classList.add('bg-[#080D1A]/60', 'border-slate-700');
-          nextOptions.classList.remove('hidden');
-
-          if (nextBadge) {
-            nextBadge.innerText = 'Active';
-            nextBadge.className = 'text-[9px] font-mono-custom px-2 py-0.5 rounded bg-cyan-950 text-[#00F2FE] border border-[#00F2FE]/30';
-          }
-          nextBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (elapsed >= TWELVE_HOURS_MS) {
+          refreshAllUrgencyCards();
+          updateUrgencyStats(tierName);
         }
       }
+
+      checkBackgroundTimer();
+      countdownInterval = setInterval(checkBackgroundTimer, 10000);
     }
 
-    // Question 4 Selection & Flashing Input
-    function selectOption4(el, value) {
-      selectedAnswers['q4'] = value;
-      const optionsContainer = document.getElementById('qOptions-4');
-      const cards = optionsContainer.querySelectorAll('.option-card');
-      cards.forEach(card => card.classList.remove('selected'));
-      el.classList.add('selected');
-
-      const amountInput = document.getElementById('funnelAmountInput');
-      amountInput.classList.add('animate-flash');
-      amountInput.focus();
+    // Step Wizard Option Selector
+    function selectStepOption(stepNum, val, el) {
+      selectedAnswers[`step${stepNum}`] = val;
+      const stepBlock = document.getElementById(`wizardStep${stepNum}`);
+      if (stepBlock) {
+        const cards = stepBlock.querySelectorAll('.option-card');
+        cards.forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+      }
     }
 
-    // Handle 4-Second Typing Pause in Question 4 Amount Input
+    function handleStruggleInput(textarea) {
+      selectedAnswers['step5'] = textarea.value.trim();
+    }
+
     function handleAmountTyping(input) {
       const cleanVal = input.value.replace(/[^0-9]/g, '');
-      input.value = cleanVal;
-      input.classList.remove('animate-flash');
-
       const num = parseInt(cleanVal, 10);
-      const isValid = !isNaN(num) && num >= 300 && num <= 20000;
       const errorEl = document.getElementById('amountError');
 
-      if (!isValid && cleanVal.length > 0) {
+      if (cleanVal.length > 0 && (isNaN(num) || num > 40000)) {
         errorEl.classList.remove('hidden');
       } else {
         errorEl.classList.add('hidden');
       }
-
-      if (amountPauseTimer) clearTimeout(amountPauseTimer);
-
-      if (isValid) {
-        amountPauseTimer = setTimeout(() => {
-          unlockQuestion5();
-        }, 4000);
-      }
     }
 
-    function unlockQuestion5() {
-      if (currentStep < 5) {
-        currentStep = 5;
-        const q5Block = document.getElementById('qBlock-5');
-        const q5Options = document.getElementById('qOptions-5');
-        const q5Badge = document.getElementById('qBadge-5');
-
-        q5Block.classList.remove('opacity-50', 'bg-[#080D1A]/20');
-        q5Block.classList.add('bg-[#080D1A]/60', 'border-slate-700');
-        q5Options.classList.remove('hidden');
-
-        if (q5Badge) {
-          q5Badge.innerText = 'Unlocked';
-          q5Badge.className = 'text-[9px] font-mono-custom px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-500/30';
-        }
-        q5Block.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }
-
-    // Auto-Collapse Question 4 When User Focuses/Types in Question 5
-    function onQuestion5Focus() {
-      if (!q4Closed && selectedAnswers['q4'] && validateAmountInput(document.getElementById('funnelAmountInput'))) {
-        q4Closed = true;
-        document.getElementById('qOptions-4').classList.add('hidden');
-
-        const q4Badge = document.getElementById('qBadge-4');
-        if (q4Badge) {
-          q4Badge.innerText = 'Completed ✓';
-          q4Badge.className = 'text-[9px] font-mono-custom px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/30';
-        }
-      }
-    }
-
-    function validateAmountInput(input) {
-      const cleanVal = input.value.replace(/[^0-9]/g, '');
-      const num = parseInt(cleanVal, 10);
-      return !isNaN(num) && num >= 300 && num <= 20000;
-    }
-
-    // Phone Input Auto + Prefix & Non-digit Filter
     function handlePhoneInput(input) {
       const errorEl = document.getElementById('phoneError');
       let val = input.value;
@@ -1051,87 +1262,129 @@
         errorEl.classList.add('hidden');
       }
       input.value = val;
-      checkFormActivity();
     }
 
-    // Email Domain Validation
     function validateEmailInput(input) {
       const errorEl = document.getElementById('emailError');
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      if (!emailRegex.test(input.value)) {
+      if (input.value.length > 0 && !emailRegex.test(input.value)) {
         errorEl.classList.remove('hidden');
         return false;
       } else {
         errorEl.classList.add('hidden');
-        checkFormActivity();
         return true;
       }
     }
 
-    // 2-Minute Inactivity Auto-Submit Tracker
-    function checkFormActivity() {
-      const name = document.getElementById('funnelName').value.trim();
-      const phone = document.getElementById('funnelPhone').value.trim();
-      const email = document.getElementById('funnelEmail').value.trim();
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    function openFunnelModal(tierName, slotsMax) {
+      const modal = document.getElementById('funnelModal');
+      modal.classList.remove('hidden');
+      activeStep = 1;
 
-      if (name && phone.length >= 8 && emailRegex.test(email)) {
-        if (!autoSubmitTimer) {
-          autoSubmitTimer = setTimeout(() => {
-            document.getElementById('funnelForm').requestSubmit();
-          }, 120000); // 2 Minutes = 120,000 ms
+      document.getElementById('tierNoteText').innerText = `${tierName} mentorship is strictly limited to ${slotsMax} spots per month.`;
+      updateUrgencyStats(tierName);
+      renderWizardStep();
+    }
+
+    function closeFunnelModal() {
+      document.getElementById('funnelModal').classList.add('hidden');
+      if (countdownInterval) clearInterval(countdownInterval);
+    }
+
+    function renderWizardStep() {
+      for (let i = 1; i <= 8; i++) {
+        const stepEl = document.getElementById(`wizardStep${i}`);
+        const progEl = document.getElementById(`stepProgress${i}`);
+        if (stepEl) stepEl.classList.add('hidden');
+        if (progEl) {
+          if (i <= activeStep) {
+            progEl.className = 'h-1.5 rounded-full bg-[#00F2FE] transition-colors';
+          } else {
+            progEl.className = 'h-1.5 rounded-full bg-slate-800 transition-colors';
+          }
         }
       }
+
+      const activeEl = document.getElementById(`wizardStep${activeStep}`);
+      if (activeEl) activeEl.classList.remove('hidden');
+
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const submitBtn = document.getElementById('submitBtn');
+
+      if (activeStep === 1) {
+        prevBtn.classList.add('hidden');
+      } else {
+        prevBtn.classList.remove('hidden');
+      }
+
+      if (activeStep === 8) {
+        nextBtn.classList.add('hidden');
+        submitBtn.classList.remove('hidden');
+      } else {
+        nextBtn.classList.remove('hidden');
+        submitBtn.classList.add('hidden');
+      }
+    }
+
+    function navigateStep(direction) {
+      if (direction === 1) {
+        if (activeStep === 1 && !selectedAnswers.step1) {
+          alert('Please select your current employment status.');
+          return;
+        }
+        if (activeStep === 2 && !selectedAnswers.step2) {
+          alert('Please select your current experience level.');
+          return;
+        }
+        if (activeStep === 3 && !selectedAnswers.step3) {
+          alert('Please select your trading goal.');
+          return;
+        }
+        if (activeStep === 4 && !selectedAnswers.step4) {
+          alert('Please select your income replacement goal.');
+          return;
+        }
+        if (activeStep === 5 && (!selectedAnswers.step5 || selectedAnswers.step5.length < 5)) {
+          alert('Please describe your biggest struggle in trading.');
+          return;
+        }
+        if (activeStep === 6 && !selectedAnswers.step6) {
+          alert('Please select your trading capital investment range.');
+          return;
+        }
+        if (activeStep === 7) {
+          const amtInput = document.getElementById('funnelAmountInput');
+          const cleanVal = amtInput.value.replace(/[^0-9]/g, '');
+          const num = parseInt(cleanVal, 10);
+          if (!selectedAnswers.step7 || !cleanVal || isNaN(num) || num > 40000) {
+            alert('Please select an option and enter a valid numeric USD amount up to $40,000 max.');
+            amtInput.focus();
+            return;
+          }
+        }
+      }
+
+      activeStep = Math.min(Math.max(activeStep + direction, 1), 8);
+      renderWizardStep();
     }
 
     function handleFormSubmit(e) {
       e.preventDefault();
-      
-      if (!selectedAnswers.q1 || !selectedAnswers.q2 || !selectedAnswers.q3 || !selectedAnswers.q4) {
-        alert('Please complete all questionnaire steps before submitting.');
+
+      const name = document.getElementById('funnelName').value.trim();
+      const phone = document.getElementById('funnelPhone').value.trim();
+      const email = document.getElementById('funnelEmail').value.trim();
+      const date = document.getElementById('bookingDate').value;
+
+      if (!name || phone.length < 8 || !email || !date) {
+        alert('Please fill in all contact details and select your call date.');
         return;
       }
 
-      const amountInput = document.getElementById('funnelAmountInput');
-      if (!validateAmountInput(amountInput)) {
-        alert('Please provide a valid investment dollar amount between $300 and $20,000.');
-        amountInput.focus();
-        return;
-      }
-
-      const phoneInput = document.getElementById('funnelPhone');
-      if (phoneInput.value.length < 8) {
-        alert('Please enter a complete WhatsApp number including your country code (e.g. +254...).');
-        phoneInput.focus();
-        return;
-      }
-
-      const emailInput = document.getElementById('funnelEmail');
-      if (!validateEmailInput(emailInput)) {
-        alert('Please enter a valid email address with a domain (e.g., name@domain.com).');
-        emailInput.focus();
-        return;
-      }
-
-      const name = document.getElementById('funnelName').value;
-      const phone = phoneInput.value;
-
-      alert(`Thank you, ${name}! Your qualification application has been received. Our team will reach out directly via WhatsApp at ${phone}.`);
+      alert(`Thank you ${name}! Your game plan session has been booked for ${date}. Our head coaching team will reach out via WhatsApp at ${phone}.`);
       closeFunnelModal();
-    }
-
-    // FAQ Accordion Toggle
-    function toggleFAQ(num) {
-      const content = document.getElementById(`faqContent${num}`);
-      const icon = document.getElementById(`faqIcon${num}`);
-      if (content.classList.contains('hidden')) {
-        content.classList.remove('hidden');
-        icon.innerHTML = '&minus;';
-      } else {
-        content.classList.add('hidden');
-        icon.innerHTML = '&plus;';
-      }
     }
 
     // Dynamic Lot Size Calculator Engine
@@ -1162,7 +1415,12 @@
       document.getElementById('outputUnits').innerText = `${Math.round(units).toLocaleString()}`;
     }
 
-    window.onload = calculateLotSize;
+    window.onload = function() {
+      calculateLotSize();
+      refreshAllUrgencyCards();
+      startAutoSlide();
+      setInterval(refreshAllUrgencyCards, 10000);
+    };
   </script>
 </body>
 </html>
