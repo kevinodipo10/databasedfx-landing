@@ -740,14 +740,11 @@
       </div>
 
       <form id="funnelForm"
-            action="https://formsubmit.co/kevinodipo25@gmail.com"
+            action="https://api.web3forms.com/submit"
             method="POST"
-            onsubmit="handleFormSubmit(event)"
-            novalidate>
-        <input type="hidden" name="_cc" value="kevinodipo27@gmail.com">
-        <input type="hidden" name="_subject" value="New Data-Based FX Mentorship Application">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_replyto" id="formReplyTo" value="">
+            onsubmit="handleFormSubmit(event)">
+        <input type="hidden" name="access_key" value="dab56df0-da27-4c9a-a363-9047df4f1d03">
+        <input type="hidden" name="subject" value="New Data-Based FX Mentorship Application">
         <input type="hidden" name="Selected Tier" id="selectedTierField" value="">
         <input type="hidden" name="1. Employment Status" id="submissionStep1" value="">
         <input type="hidden" name="2. Experience Level" id="submissionStep2" value="">
@@ -904,7 +901,7 @@
           </div>
         </div>
 
-        <!-- STEP 7: IMMEDIATE INVESTMENT COMMITMENT (WORDING FIXED TO 3-6 MONTHS + ADAPTIVE MOBILE INPUT) -->
+        <!-- STEP 7: IMMEDIATE INVESTMENT COMMITMENT -->
         <div id="wizardStep7" class="space-y-3.5 sm:space-y-4 hidden">
           <label class="block text-sm sm:text-base font-bold text-white leading-snug">
             7. Imagine....it's <u class="decoration-[#00F2FE] underline-offset-4">3-6 months</u> from today, and you have now accomplished your goal of becoming a profitable trader...
@@ -957,7 +954,7 @@
           <div class="space-y-3">
             <div>
               <label class="block text-slate-400 text-[10px] font-mono-custom mb-1 uppercase">FULL NAME *</label>
-              <input type="text" name="Full Name" id="funnelName" required placeholder="John Doe" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white text-xs outline-none focus:border-[#00F2FE]">
+              <input type="text" name="name" id="funnelName" required placeholder="John Doe" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white text-xs outline-none focus:border-[#00F2FE]">
             </div>
 
             <div>
@@ -976,9 +973,29 @@
               </p>
             </div>
 
-            <div class="pt-2">
+            <div class="pt-2 relative">
               <label class="block text-slate-400 text-[10px] font-mono-custom mb-2 uppercase">SELECT YOUR PREFERRED CALL DATE *</label>
-              <input type="date" name="Preferred Call Date" id="bookingDate" required class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white font-mono-custom text-xs outline-none focus:border-[#00F2FE]">
+              <!-- Hidden Date Input for Form Submission -->
+              <input type="hidden" name="Preferred Call Date" id="bookingDate" required>
+              
+              <!-- Interactive Trigger Box -->
+              <div onclick="togglePopCalendar()" class="w-full bg-[#081022] border border-slate-700/80 rounded-xl p-3 text-white font-mono-custom text-xs cursor-pointer flex items-center justify-between hover:border-[#00F2FE] transition-colors">
+                <span id="bookingDateDisplay" class="text-slate-400">Click to select date from calendar...</span>
+                <svg class="w-4 h-4 text-[#00F2FE]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+
+              <!-- POP-UP CALENDAR PICKER -->
+              <div id="popCalendarPicker" class="hidden absolute left-0 bottom-full mb-2 w-full z-30 bg-[#080D1A] border border-[#00F2FE]/40 rounded-xl p-4 shadow-[0_10px_30px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+                <div class="flex justify-between items-center mb-3">
+                  <button type="button" onclick="changePopMonth(-1)" class="text-slate-400 hover:text-[#00F2FE] p-1 font-bold text-sm transition-colors">&larr;</button>
+                  <span id="popMonthYearTitle" class="text-xs font-bold text-white font-mono-custom"></span>
+                  <button type="button" onclick="changePopMonth(1)" class="text-slate-400 hover:text-[#00F2FE] p-1 font-bold text-sm transition-colors">&rarr;</button>
+                </div>
+                <div class="grid grid-cols-7 gap-1 text-center font-mono-custom text-[10px] text-slate-400 mb-2 font-bold">
+                  <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                </div>
+                <div id="popCalendarDays" class="grid grid-cols-7 gap-1 text-center font-mono-custom text-xs"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1182,6 +1199,101 @@
     let activeStep = 1;
     let selectedAnswers = {};
     let countdownInterval = null;
+
+    // POP-UP CALENDAR PICKER ENGINE
+    let calendarDateState = new Date();
+    let selectedDateISO = "";
+
+    function togglePopCalendar() {
+      const picker = document.getElementById('popCalendarPicker');
+      if (picker.classList.contains('hidden')) {
+        picker.classList.remove('hidden');
+        renderPopCalendar();
+      } else {
+        picker.classList.add('hidden');
+      }
+    }
+
+    function changePopMonth(offset) {
+      calendarDateState.setMonth(calendarDateState.getMonth() + offset);
+      renderPopCalendar();
+    }
+
+    function renderPopCalendar() {
+      const year = calendarDateState.getFullYear();
+      const month = calendarDateState.getMonth();
+
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      document.getElementById('popMonthYearTitle').innerText = `${monthNames[month]} ${year}`;
+
+      const daysContainer = document.getElementById('popCalendarDays');
+      daysContainer.innerHTML = '';
+
+      const firstDayIndex = new Date(year, month, 1).getDay();
+      const lastDate = new Date(year, month + 1, 0).getDate();
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      // Blank slots before 1st of month
+      for (let i = 0; i < firstDayIndex; i++) {
+        const blank = document.createElement('div');
+        daysContainer.appendChild(blank);
+      }
+
+      // Render actual days
+      for (let d = 1; d <= lastDate; d++) {
+        const dayBtn = document.createElement('div');
+        const currentDateObj = new Date(year, month, d);
+
+        const isoStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+        dayBtn.innerText = d;
+        dayBtn.className = "py-1.5 rounded-lg cursor-pointer transition-all flex items-center justify-center font-medium ";
+
+        if (currentDateObj < today) {
+          // Disable past dates
+          dayBtn.classList.add('text-slate-600', 'cursor-not-allowed', 'opacity-40');
+        } else {
+          if (isoStr === selectedDateISO) {
+            dayBtn.classList.add('bg-[#00F2FE]', 'text-black', 'font-bold', 'shadow-[0_0_10px_#00F2FE]');
+          } else {
+            dayBtn.classList.add('text-slate-200', 'hover:bg-[#00F2FE]/20', 'hover:text-[#00F2FE]');
+          }
+
+          dayBtn.onclick = function() {
+            selectedDateISO = isoStr;
+            document.getElementById('bookingDate').value = isoStr;
+            
+            // Format for display
+            const formattedDisplay = currentDateObj.toLocaleDateString('en-US', {
+              weekday: 'short',
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            });
+
+            const displayEl = document.getElementById('bookingDateDisplay');
+            displayEl.innerText = formattedDisplay;
+            displayEl.classList.remove('text-slate-400');
+            displayEl.classList.add('text-[#00F2FE]', 'font-bold');
+
+            document.getElementById('popCalendarPicker').classList.add('hidden');
+          };
+        }
+
+        daysContainer.appendChild(dayBtn);
+      }
+    }
+
+    // Close pop-up calendar if clicked outside
+    document.addEventListener('click', function(e) {
+      const picker = document.getElementById('popCalendarPicker');
+      const container = e.target.closest('.relative');
+      if (picker && !picker.classList.contains('hidden') && (!container || !container.contains(picker))) {
+        picker.classList.add('hidden');
+      }
+    });
 
     // Helper to get or generate persistent 12-hour data per tier
     function getTierUrgencyData(storageKey, isTurbo) {
@@ -1435,13 +1547,12 @@
       document.getElementById('submissionAmount').value = amountInput.value.trim();
       document.getElementById('selectedTierField').value =
         document.getElementById('modalTitle').innerText.replace(/ Application$/, '');
-      document.getElementById('formReplyTo').value = email;
 
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
       submitBtn.innerText = 'Sending Application...';
 
-      // Standard browser POST to FormSubmit; no AJAX or backend code.
+      // Standard browser POST to Web3Forms
       HTMLFormElement.prototype.submit.call(form);
     }
 
@@ -1462,7 +1573,7 @@
         units = lotSize * 100000;
       } else if (instrument === 'XAUUSD') {
         lotSize = monetaryRisk / (slPips * 10);
-        units = lotSize * 100;
+        units = lotSize * 10;
       } else if (instrument === 'NAS100') {
         lotSize = monetaryRisk / slPips;
         units = lotSize * 10;
